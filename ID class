@@ -1,0 +1,25 @@
+public class ID {
+    
+    private int idNumber = 0;
+    
+    private static int idCount = 0;
+    
+    //assign  new unique ID to each object when newly created
+    public ID() {
+        this.idNumber = idCount++;   
+    }
+    
+
+    //get ID method
+    public int getIdNumber() {
+        return idNumber;
+    }
+
+
+    //toString
+    public String toString() {
+        return "ID: " + idNumber;
+    }
+    
+    
+}
