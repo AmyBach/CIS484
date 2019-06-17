@@ -1,0 +1,1282 @@
+import java.util.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import javafx.application.Application;
+import static javafx.application.Application.launch;
+import javafx.collections.*;
+import javafx.event.*;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.*;
+import javafx.stage.Stage;
+import java.sql.*;
+import oracle.jdbc.pool.*;
+
+public class GPApp extends Application { 
+
+ public static ArrayList<Employee> Employee = new ArrayList<Employee>();
+ public static ArrayList<Schedule> Shifts = new ArrayList<Schedule>();
+ public static ArrayList<Customer> Customer = new ArrayList<Customer>();
+ public static ArrayList<Product> Product = new ArrayList<Product>();
+ public static ArrayList<Supplier> Supplier = new ArrayList<Supplier>();
+ public static ArrayList<Expense> Expense = new ArrayList<Expense>();
+ public static ArrayList<Customer> ClubMembers = new ArrayList<Customer>();
+ 
+ 
+Connection dbConn;
+Statement cmmtStmt;
+ResultSet dbResults;
+
+    // Create primary pane
+    GridPane primaryPane = new GridPane();
+    GridPane posPane = new GridPane();
+    GridPane managePane = new GridPane();
+    GridPane reportsPane = new GridPane();
+    
+    // Employee Panes
+    GridPane employeePane = new GridPane();
+    GridPane addEmployeePane = new GridPane();
+    GridPane updateEmployeePane = new GridPane();
+    
+    // Inventory Panes
+    GridPane inventoryPane = new GridPane(); 
+    GridPane addProductPane = new GridPane();
+    
+    // Expense Panes
+    GridPane expensePane = new GridPane();
+    GridPane addExpensePane = new GridPane();
+    GridPane editExpensePane = new GridPane(); 
+    
+    // Supplier Panes
+    GridPane supplierPane = new GridPane();
+    GridPane addSupplierPane = new GridPane();
+
+    // Schedule Panes
+    GridPane schedulePane = new GridPane();    
+    
+    // Customer Panes
+    GridPane custAcctPane = new GridPane();
+
+    TabPane tbPane = new TabPane();
+    Tab tab1 = new Tab("POS");
+    Tab tab2 = new Tab("Manage");
+    Tab tab3 = new Tab("Reports");
+
+    // Buttons
+    Button btnEmployees = new Button("Employees"); // Manage Page
+    Button btnExpenses = new Button("Expenses");
+    Button btnInventory = new Button("Inventory"); 
+    Button btnSchedule = new Button("Schedule");
+    Button btnSupplier = new Button("Supplier");
+    Button btnGenerate = new Button("Generate"); // Reports Page
+    Button btnAddSup = new Button("Add New Supplier"); // Supplier buttons
+    Button btnRemSup = new Button("Remove Supplier");
+    Button btnAddNewSup = new Button("Add New Supplier"); // Supplier Button
+    Button btnChangeImage = new Button("Change Image"); // Inventory Buttons
+    Button btnAddNewProd = new Button("Add New Product");
+    Button btnUpdateEmp = new Button("Update Employee"); // Employee Buttons
+    Button btnAddNewEmp = new Button("Add New Employee");
+    Button btnAddEmp = new Button("Add Employee"); // Button to ADD NEW EMPLOYEE
+    Button btnPrint = new Button("Print Receipt"); // POS Page
+    Button btnCreateCustAccount = new Button("Create Customer");
+    Button btnNewCustAccount = new Button("Create Customer");
+    Button btnAddEmpSch = new Button("Add to Schedule"); // Schedule Button
+    Button btnAddProd = new Button("Add Product");
+    Button btnAddExpense = new Button("Add Expense"); // Expense Buttons
+    Button btnRemoveExpense = new Button("Remove Expense");
+    Button btnAddNewExpense = new Button("Add New Expense");
+    Button btnEditEx = new Button("Edit Expense");
+    Button btnUpdateEx = new Button("Update Expense");
+    Button btnFilter = new Button("Filter");
+    Button btnSaveChanges = new Button("Save Changes"); //update employee
+    //Radio Buttons
+    RadioButton rdbExpPaid = new RadioButton("Paid");
+    RadioButton rdbExpUnpaid = new RadioButton("Unpaid");
+    RadioButton rdbExpPaid2 = new RadioButton("Paid");
+    RadioButton rdbExpUnpaid2 = new RadioButton("Unpaid");
+     // Create Toggle Group for update/remove employee
+    ToggleGroup tGroup = new ToggleGroup();
+    RadioButton rbUpdateEmp = new RadioButton("Update Employee");
+    RadioButton rbRemoveEmp = new RadioButton("Remove Employee");
+    //Toggle group
+    ToggleGroup btnExpGroup = new ToggleGroup();
+    
+    // Labels
+    Label lblRType = new Label("Report Type: ");
+    Label lblSNum = new Label("Store #: ");
+    Label lblWeek = new Label("Week: ");
+    Label lblExpense = new Label("Current Expenses: ");
+    Label lblExpFilter = new Label("Filter by: ");
+    Label lblSupplier = new Label("Select Supplier: ");
+    Label lblInventory = new Label("Inventory: ");
+    Label lblEmployee = new Label("Employees: ");
+    Label lblTotal = new Label("Total:");
+    Label lblEmpName = new Label("Name:"); // Add Employee Page
+    Label lblEmpPos = new Label("Position:");
+    Label lblEmpPhone = new Label("Phone:");
+    Label lblEmpAddress = new Label("Address:");
+    Label lblEmpStatus = new Label("Employment Type:");
+    Label lblEmpWage = new Label("Wage:");
+    Label lblDaySelection = new Label("Select Day: ");
+    Label lblStartTime = new Label("Select Start Time");
+    Label lblEndTime = new Label("Select End Time");
+    Label lblCustName = new Label("Name: ");
+    Label lblCustPhone = new Label("Phone: ");
+    Label lblCustAddress = new Label("(Optional) Address: ");
+    Label lblCustEmail = new Label("(Optional) Email: ");
+    Label lblProdName = new Label("Product Name: ");
+    Label lblProdWeight = new Label("Product Weight: ");
+    Label lblProdPricePaid = new Label("Product Price: "); // Add Product Page
+    Label lblProdSalePrice = new Label("Product Sale Price: ");
+    Label lblProdDesc = new Label("Product Description: ");
+    Label lblSupplierName = new Label("Supplier: ");
+    Label lblProdImage = new Label("Image: ");
+    Label lblExpCat = new Label("Category: ");//Add Expense Page
+    Label lblExpAmount = new Label("Amount: ");
+    Label lblExpDueDate = new Label("Due Date: ");
+    Label lblExpPaid = new Label("Paid/Unpaid: ");
+    Label lblSupName = new Label("Supplier Name: ");// Add Supplier
+    Label lblSupAddress = new Label("Supplier Address: ");
+    Label lblSupPhone = new Label("Supplier Phone Number: "); 
+    
+    Label lblEmpName1 = new Label("Name:"); // Updated Employee Name
+    Label lblEmpPos1 = new Label("Position:"); // Updated Employee Position 
+    Label lblEmpPhone1 = new Label("Phone:"); // Updated Employee Phone     
+    Label lblEmpAddress1 = new Label("Address:"); // Updated Employee Address
+    Label lblEmpStatus1 = new Label("Employment Type:"); // Updated Employee Status
+    Label lblEmpWage1 = new Label("Wage:"); // Updated Employee Wage
+    Label lblEditEmp = new Label("Edit Employee: "); // Update Employee Page
+    Label lblRemoveEmp = new Label("Remove Employee: ");
+    Label lblSelectEmp = new Label("Select Empoyee: ");
+    
+    Label lblExpCat2 = new Label("Category: ");//Add Updated Expense Page
+    Label lblExpAmount2 = new Label("Amount: ");
+    Label lblExpDueDate2 = new Label("Due Date: ");
+    Label lblExpPaid2 = new Label("Paid/Unpaid: ");
+    
+ 
+    // TextFields
+    TextField txtSupInfo = new TextField();
+    TextField txtTotal = new TextField();
+    TextField txtEmpName = new TextField("Enter first and last name"); // Add Employee Page
+    TextField txtEmpPos = new TextField();
+    TextField txtEmpPhone = new TextField();
+    TextField txtEmpAddress = new TextField();
+    TextField txtEmpWage = new TextField();
+    TextField txtCustName = new TextField();
+    TextField txtCustPhone = new TextField();
+    TextField txtCustAddress = new TextField();
+    TextField txtCustEmail = new TextField();
+    TextField txtProdName = new TextField();
+    TextField txtProdWeight = new TextField();
+    TextField txtProdPricePaid = new TextField();
+    TextField txtProdSalePrice = new TextField(); // Add Product Page
+    TextField txtProdDesc = new TextField();
+    TextField txtSupplierName = new TextField();
+    TextField txtExpAmount = new TextField("Please enter expense amount"); //to enter expense amount    
+    TextField txtExpDueDate = new TextField("Please choose due date from calendar");   
+    TextField txtSupName = new TextField();
+    TextField txtSupAddress = new TextField();
+    TextField txtSupPhone = new TextField(); 
+
+    // Add Updated Employee TextFields
+    TextField txtEmpName1 = new TextField(); // Updated Employee Name
+    TextField txtEmpPos1 = new TextField(); // Updated Employee Position
+    TextField txtEmpPhone1 = new TextField(); // Updated Employee Phone
+    TextField txtEmpAddress1 = new TextField(); // Updated Employe Address
+    TextField txtEmpWage1 = new TextField(); // Updated Employee Wage
+    
+    TextField txtExpAmount2 = new TextField("Please enter expense amount"); //Updated Expense Labels    
+    TextField txtExpDueDate2 = new TextField("Please choose due date from calendar");
+    
+    // TextAreas
+    TextArea taReports = new TextArea();
+    
+    // TableView
+    TableView tblReports = new TableView<>();
+    //ObservableList<Employee> tableData = FXCollections.observableArrayList();
+    TableView tblExpenses = new TableView<>();
+    //ObservableList<Expense> tableData = FXCollections.observableArrayList();
+    TableView tblSuppliers = new TableView<>();
+    //ObservableList<Supplier> tableData = FXCollections.observableArrayList();
+    TableView tblInventory = new TableView<>();
+    //ObservableList<Product> tableData = FXCollections.observableArrayList();
+    TableView tblEmployee = new TableView<>();
+    //ObservableList<Employee> tableData = FXCollections.observableArrayList();
+    TableView tblPOS = new TableView<>();
+    //ObservableList<Product> tableData = FXCollections.observableArrayList();
+    
+    // Observable Lists
+    ObservableList<Employee> empTableData = FXCollections.observableArrayList(Employee);
+    ObservableList obsEmpStatus = FXCollections.observableArrayList("Part Time", "Full Time");
+    ObservableList obsStartTime = FXCollections.observableArrayList("7:00 AM", 
+            "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", 
+            "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM");
+    ObservableList obsEndTime = FXCollections.observableArrayList("10:00 AM", 
+            "11:00 AM", "12:00 PM", "1:00 PM", "2:00 PM", "3:00 PM", 
+            "4:00 PM", "5:00 PM", "6:00 PM", "7:00 PM", "8:00 PM", "9:00 PM",
+            "10:00 PM", "11:00 PM");
+    ObservableList obsEmpSch = FXCollections.observableArrayList();    
+    ObservableList obsEmp = FXCollections.observableArrayList();
+    ObservableList<Product> prodTableData = FXCollections.observableArrayList(Product);
+    ObservableList obsProduct = FXCollections.observableArrayList();
+    ObservableList obsSupplier = FXCollections.observableArrayList();    
+    ObservableList<Expense> expTableData = FXCollections.observableArrayList(Expense);
+    ObservableList obsExpFilter = FXCollections.observableArrayList();    
+    ObservableList obsExp = FXCollections.observableArrayList(Expense);    
+    //Obs list for Employee Position - with some pre-populate position 
+    ObservableList obsEmpPosit = FXCollections.observableArrayList("Manager", "Cashier", "Inventory Staff", "Custodian");    
+    //Obs list for Expense Category - pre-populate 
+    ObservableList obsExpenseCategory = FXCollections.observableArrayList("Mortgages", "Utilities", "Lawn Care",
+                                                                          "Maintenance", "Insurance", "Cleaning", "Mechanics");
+    ObservableList editExpenseList = FXCollections.observableArrayList(); 
+    ObservableList obsFilters = FXCollections.observableArrayList("Category", "Amount", "Due Date", "Paid");
+    // ComboBoxes
+    ComboBox cmboRType = new ComboBox(); // Reports Page
+    ComboBox cmboSNum = new ComboBox();
+    ComboBox cmboWeek = new ComboBox();
+    ComboBox cmboExpFilter = new ComboBox(obsFilters); // Expense Button    
+    ComboBox cmboExp = new ComboBox(editExpenseList);
+    ComboBox cmboSupplier = new ComboBox(obsSupplier); // Supplier Button
+    ComboBox cmboInvItem = new ComboBox(); // Inventory Button
+    ComboBox cmboEmp = new ComboBox(obsEmp); // Employee Button
+    ComboBox cmboEmpStatus = new ComboBox(obsEmpStatus); // Employee Status(Part/Full Time)
+    ComboBox cmboEmpSch = new ComboBox(obsEmpSch);    
+    ComboBox cmboStartTime = new ComboBox(obsStartTime);
+    ComboBox cmboEndTime = new ComboBox(obsEndTime);   
+    ComboBox cmboProdImage = new ComboBox(); // Product Images
+    
+    //Combo box for employee positions  
+    ComboBox cmboEmpPosit = new ComboBox(obsEmpPosit);
+    //Combo box for expense category
+    ComboBox cmboExpenseCategory = new ComboBox(obsExpenseCategory);
+    ComboBox cmboExpenseCategory2 = new ComboBox(obsExpenseCategory);
+    // Updated Employee Status
+    ComboBox cmboEmpStatus1 = new ComboBox(obsEmpStatus); 
+    //Combobox for updating employee 
+    ComboBox cmboSelectEmp = new ComboBox(obsEmp);
+    
+    // Alerts
+    Alert addEmpEmpty = new Alert(Alert.AlertType.ERROR);
+    Alert aEName = new Alert(Alert.AlertType.ERROR);
+    Alert aEmpWage = new Alert(Alert.AlertType.ERROR);
+    Alert aEmpPos = new Alert(Alert.AlertType.ERROR);
+    Alert addProdEmpty = new Alert(Alert.AlertType.ERROR);
+    
+    //Alert for paid/unpaid radio button 
+    Alert checkExpense = new Alert(Alert.AlertType.ERROR); 
+    //alert for updating emp
+    Alert aEditEmpEmpty = new Alert(Alert.AlertType.ERROR);
+    // DatePicker
+    DatePicker daySelection = new DatePicker();
+    DatePicker dueDate = new DatePicker();
+    DatePicker dueDate2 = new DatePicker();
+    LocalDate ds;
+    LocalDate dd;
+       
+    // Static Variables
+    private static int empSchArrayPos = 0;
+    private static int empArrayPos = 0;
+    private static int prodArrayPos = 0;
+    private static int supArrayPos = 0;
+    private static int expArrayPos = 0;
+    
+    // CheckBox
+    CheckBox chkThriftyClub = new CheckBox("Add to Thrifty Club?");
+    
+    public void start(Stage primaryStage) {
+
+        // Alert information
+        addEmpEmpty.setHeaderText("Empty Field!");
+        addEmpEmpty.setContentText("Please fill every field.");
+        aEName.setHeaderText("Invalid Employee Name!");
+        aEName.setContentText("Please enter a first and last name seperated by a space.");
+        aEmpWage.setHeaderText("Invalid Employee Wage!");
+        aEmpWage.setContentText("Please enter a wage amount greater than 0.");
+        aEmpPos.setHeaderText("Invalid Employee Status");
+        aEmpPos.setContentText("Please select an employee status.");
+        addProdEmpty.setHeaderText("Empty Field(s)!");
+        addProdEmpty.setContentText("Please fill every field.");    
+        checkExpense.setContentText("Please choose if expense is Paid or Unpaid!"); //message for paid/unpaid expense button
+        Alert addSupEmpty = new Alert(Alert.AlertType.ERROR);
+  
+        //Toggle group for checking paid/unpaid expense; 
+        //Adding each Radio Button to a ToggleGroup so that they are aware of each other.
+        rdbExpPaid.setToggleGroup(btnExpGroup);
+        rdbExpUnpaid.setToggleGroup(btnExpGroup);
+        
+        // Set Toggle Group for update employee
+        rbUpdateEmp.setToggleGroup(tGroup);
+        rbRemoveEmp.setToggleGroup(tGroup);
+        
+        // Pane Alignments
+        primaryPane.setAlignment(Pos.CENTER);
+        posPane.setAlignment(Pos.CENTER);
+        managePane.setAlignment(Pos.CENTER);
+        reportsPane.setAlignment(Pos.TOP_LEFT);
+        //schedulePane.setAlignment(Pos.CENTER);
+        reportsPane.setPadding(new Insets(10, 10, 10, 10));
+        posPane.setPadding(new Insets(10, 10, 10, 10));
+        //custAcctPane.setAlignment(Pos.CENTER);
+        updateEmployeePane.setPadding(new Insets(25, 25, 25, 25));
+        
+        // Pane Hgaps and Vgaps
+        posPane.setVgap(10);
+        posPane.setHgap(37.5);
+        managePane.setVgap(25);
+        reportsPane.setVgap(10);
+
+        // Set button size and fonts
+        btnEmployees.setMinSize(200, 50);
+        btnExpenses.setMinSize(200, 50);
+        btnInventory.setMinSize(200, 50);
+        btnSupplier.setMinSize(200, 50);
+        btnSchedule.setMinSize(200, 50);
+        btnAddEmp.setMinSize(150, 50);
+        btnAddNewEmp.setMinSize(150, 50);
+        btnUpdateEmp.setMinSize(100, 50);
+        btnAddExpense.setMaxSize(150, 50);
+        btnUpdateEx.setMaxSize(150, 50);        
+        btnAddNewExpense.setMaxSize(150, 50);
+        
+        // Add POS tab nodes here
+        posPane.add(tblPOS, 0, 0, 6, 1);
+        posPane.add(lblTotal, 4, 1);
+        posPane.add(txtTotal, 5, 1);
+        posPane.add(btnPrint, 3, 2, 2, 1);
+        posPane.add(btnCreateCustAccount,5, 2);
+        
+        // Add Manage tab nodes here
+        managePane.add(btnEmployees, 0, 0);
+        managePane.add(btnExpenses, 0, 1);
+        managePane.add(btnInventory, 0, 2);
+        managePane.add(btnSupplier, 0, 3);
+        managePane.add(btnSchedule, 0, 4);
+
+        // Add Reports tab nodes here
+        reportsPane.add(lblRType, 0, 1); // Labels
+        reportsPane.add(lblSNum, 2, 1);
+        reportsPane.add(lblWeek, 4, 1);
+        reportsPane.add(cmboRType, 1, 1); // ComboBoxes
+        reportsPane.add(cmboSNum, 3, 1);
+        reportsPane.add(cmboWeek, 5, 1);
+        reportsPane.add(btnGenerate, 6, 1, 2, 1); // Buttons
+        
+        //btnGenerate.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        //reportsPane.add(taReports, 2, 10, 25, 10); // TextArea
+        //tblReports.setItems(tableData);
+
+        reportsPane.add(tblReports, 1, 3, 6, 1);
+        tblReports.setMinWidth(550);
+        
+        // Create table columns for Report
+        TableColumn tblcName = new TableColumn("Name");
+        TableColumn tblcHours = new TableColumn("Hours");
+        TableColumn tblcWages = new TableColumn("Wages Earned");
+        TableColumn tblcSales = new TableColumn("Sales");       
+        tblReports.getColumns().addAll(tblcName, tblcHours, tblcWages, tblcSales);
+
+        //Expense Table
+        TableColumn tblcCategory = new TableColumn("Category");
+        TableColumn tblcAmount = new TableColumn("Amount");
+        TableColumn tblcDue = new TableColumn("Due");
+        TableColumn tblcPaid = new TableColumn("Paid");
+        tblExpenses.getColumns().addAll(tblcCategory, tblcAmount, tblcDue, tblcPaid);
+       
+        //Supplier Table
+        TableColumn tblcSupProduct = new TableColumn("Product");
+        TableColumn tblcProdCat = new TableColumn("Category");
+        TableColumn tblcPrice = new TableColumn("Price");
+        tblSuppliers.getColumns().addAll(tblcSupProduct, tblcProdCat, tblcPrice);
+        
+        //Inventory Table
+        TableColumn tblcImage = new TableColumn("Image");
+        TableColumn tblcProduct = new TableColumn("Product");
+        TableColumn tblcStock = new TableColumn("# in Stock");
+        TableColumn tblcIncoming = new TableColumn("Amount Incoming");
+        TableColumn tblcDiscarded = new TableColumn("# Discarded");
+        tblInventory.getColumns().addAll(tblcImage, tblcProduct, tblcStock, tblcIncoming, tblcDiscarded);
+
+        //Employee Table
+        TableColumn tblcEmpName = new TableColumn("Name");
+        TableColumn tblcPosition = new TableColumn("Position");
+        TableColumn tblcPhone = new TableColumn("Phone");
+        TableColumn tblcAddress = new TableColumn("Address");
+        TableColumn tblcWork = new TableColumn("Full/Part");
+        TableColumn tblcWage = new TableColumn("Wage");
+        tblEmployee.getColumns().addAll(tblcEmpName, tblcPosition, tblcPhone, tblcAddress, tblcWork, tblcWage);
+
+        // POS Table
+        TableColumn tblcProdScan = new TableColumn("Product Scanned");
+        TableColumn tblcQuantity = new TableColumn("Amount");
+        TableColumn tblcProdPrice = new TableColumn("Price");
+        TableColumn tblcDiscount = new TableColumn("Discount");
+        TableColumn tblcApplied = new TableColumn("Applied");
+        TableColumn tblcTotal = new TableColumn("Total");
+        tblPOS.getColumns().addAll(tblcProdScan, tblcQuantity, tblcProdPrice, tblcDiscount, tblcApplied, tblcTotal);
+
+        // Setting Tab Pane
+        primaryPane.add(tbPane, 0, 0);
+        
+        // Position panes inside tabs
+        tab1.setContent(posPane);
+        tab2.setContent(managePane);
+        tab3.setContent(reportsPane);
+                
+        tbPane.getTabs().add(tab1);
+        tbPane.getTabs().add(tab2);
+        tbPane.getTabs().add(tab3);
+        
+        Scene primaryScene = new Scene(primaryPane, 750, 500);
+        primaryStage.setTitle("Thrifty Store");
+        primaryStage.setScene(primaryScene);
+        primaryStage.show();
+
+        tbPane.setMinHeight(primaryScene.getHeight());
+        tbPane.setMinWidth(primaryScene.getWidth());
+        txtTotal.setMaxWidth(tblcTotal.getWidth());
+        daySelection.setPrefWidth(375);
+
+        // Lambdas for Manage Page buttons
+        btnEmployees.setOnAction(e -> {
+            
+        employeePane = new GridPane();
+        employeePane.setAlignment(Pos.CENTER);
+        employeePane.add(lblEmployee, 0, 0);
+        employeePane.add(cmboEmp, 0, 2);
+        employeePane.add(btnUpdateEmp, 1, 2);
+        employeePane.add(btnAddNewEmp, 2, 2);
+        employeePane.add(tblEmployee, 0, 1, 3, 1);
+        
+        Scene empScene = new Scene(employeePane, 600, 650);
+        Stage empStage = new Stage();
+        empStage.setScene(empScene);
+        empStage.setTitle("Thrifty Store Employees");
+        empStage.show();
+        employeePane.setHgap(15);
+        employeePane.setVgap(15);
+        
+        });
+        
+        // Add Employee Button
+        btnAddNewEmp.setOnAction(e -> {
+
+        addEmployeePane = new GridPane();    
+        addEmployeePane.setAlignment(Pos.CENTER);
+        addEmployeePane.setVgap(10);
+        addEmployeePane.setHgap(5);
+        // Labels for create new employee window
+        addEmployeePane.add(lblEmpName, 0, 0); 
+        addEmployeePane.add(lblEmpPos, 0, 1);
+        addEmployeePane.add(lblEmpPhone, 0, 2);
+        addEmployeePane.add(lblEmpAddress, 0, 3);
+        addEmployeePane.add(lblEmpStatus, 0, 4);
+        addEmployeePane.add(lblEmpWage, 0, 5);
+        // TextFields for employee input
+        addEmployeePane.add(txtEmpName, 1, 0); 
+        addEmployeePane.add(cmboEmpPosit, 1, 1); 
+       // addEmployeePane.add(txtEmpPos, 1, 1);
+        addEmployeePane.add(txtEmpPhone, 1, 2);
+        addEmployeePane.add(txtEmpAddress, 1, 3);
+        addEmployeePane.add(cmboEmpStatus, 1, 4);
+        addEmployeePane.add(txtEmpWage, 1, 5);
+        addEmployeePane.add(btnAddEmp, 1, 7);
+        Scene addEmpScene = new Scene(addEmployeePane, 400, 300);
+        Stage addEmpStage = new Stage();
+        addEmpStage.setScene(addEmpScene);
+        addEmpStage.setTitle("Add Employee");
+        addEmpStage.show();
+        //clear the employee name input on click     
+        txtEmpName.setOnMouseClicked(i ->{
+        txtEmpName.clear();
+        });
+    });
+
+    //when click button Add Employee
+    btnAddEmp.setOnAction(e -> {
+        // Check for empty fields
+        boolean eName = txtEmpName.getText().trim().isEmpty();
+        //boolean ePos = txtEmpPos.getText().trim().isEmpty();
+        boolean ePos = cmboEmpPosit.getItems().isEmpty();
+        boolean ePhone = txtEmpPhone.getText().trim().isEmpty();
+        boolean eAddress = txtEmpAddress.getText().trim().isEmpty();
+        boolean eWage = txtEmpWage.getText().trim().isEmpty();
+        if (eName || ePos || ePhone || eAddress || eWage)
+        {
+
+            addEmpEmpty.showAndWait();
+
+        } 
+        else 
+        {
+            String empName = txtEmpName.getText();
+            if (empName.contains(" ") == false)
+            { // If there is NO space in name
+            
+                aEName.showAndWait();
+
+            }
+            else 
+            {
+                
+                empName = txtEmpName.getText();
+                int empStatus = cmboEmpStatus.getSelectionModel().getSelectedIndex();
+                String empPos = (String)cmboEmpPosit.getSelectionModel().getSelectedItem();
+                //String empPos = txtEmpPos.getText();
+                String empPhone = txtEmpPhone.getText();
+                String empAddress = txtEmpAddress.getText();
+                String empWage = txtEmpWage.getText();
+                double empWage1 = Double.parseDouble(empWage);
+                if (empWage1 <= 0) 
+                { 
+                    aEmpWage.showAndWait();
+
+                } 
+                else 
+                {
+                    if (empStatus < 0) {
+
+                        aEmpPos.showAndWait();
+
+                    } 
+                    else {
+
+                    Employee employee = new Employee(empName, empPos,  empPhone, empAddress, empStatus, empWage1);
+                    Employee.add(employee);
+                    empTableData.add(employee);    
+                                                    
+
+                        obsEmp.add(Employee.get(empArrayPos).getEmployeeName());
+                        empArrayPos++;
+                        obsEmpSch.add(Employee.get(empSchArrayPos).getEmployeeName());
+                        empSchArrayPos++;
+                        txtEmpName.clear();
+                        txtEmpPos.clear();
+                        cmboEmpPosit.getSelectionModel().clearSelection();
+                        txtEmpPhone.clear();
+                        txtEmpAddress.clear();
+                        cmboEmpStatus.getSelectionModel().clearSelection();
+                        txtEmpWage.clear();
+                    }
+                } 
+            }
+        }
+    });
+    tblEmployee.setItems(empTableData);
+    //add value to each column 
+
+    tblcEmpName.setCellValueFactory(new PropertyValueFactory<Employee,String>("EmployeeName"));
+    tblcPosition.setCellValueFactory(new PropertyValueFactory<Employee,Employee>("EmployeePos")); 
+    tblcPhone.setCellValueFactory(new PropertyValueFactory<Employee,String>("EmployeePhone")); 
+    tblcAddress.setCellValueFactory(new PropertyValueFactory<Employee,String>("EmployeeAddress"));
+    tblcWork.setCellValueFactory(new PropertyValueFactory<Employee,String>("EmpStatus"));
+    tblcWage.setCellValueFactory(new PropertyValueFactory<Employee,Double>("EmployeeWage")); 
+    
+    btnUpdateEmp.setOnAction(e -> {
+            
+             
+            updateEmployeePane.setAlignment(Pos.TOP_LEFT);
+            updateEmployeePane.setHgap(20);
+            updateEmployeePane.setVgap(10);
+            
+            updateEmployeePane.add(lblEditEmp, 0, 0);
+            updateEmployeePane.add(rbUpdateEmp, 0, 3);
+            updateEmployeePane.add(lblSelectEmp, 0, 2);
+            updateEmployeePane.add(rbRemoveEmp,1, 3);
+            updateEmployeePane.add(cmboSelectEmp, 1, 2);
+            updateEmployeePane.add(btnSaveChanges, 1, 12);
+            
+            updateEmployeePane.add(lblEmpName1, 0, 5);
+            updateEmployeePane.add(lblEmpPos1, 0, 6);
+            updateEmployeePane.add(lblEmpPhone1, 0, 7);
+            updateEmployeePane.add(lblEmpAddress1, 0, 8);
+            updateEmployeePane.add(lblEmpStatus1, 0, 9);
+            updateEmployeePane.add(lblEmpWage1, 0, 10);
+            
+            updateEmployeePane.add(txtEmpName1, 1, 5);
+            
+            //updateEmployeePane.add(txtEmpPos1, 1, 6);
+            
+            updateEmployeePane.add(cmboEmpPosit, 1, 6);
+            
+            updateEmployeePane.add(txtEmpPhone1, 1, 7);
+            updateEmployeePane.add(txtEmpAddress1, 1, 8);
+            updateEmployeePane.add(cmboEmpStatus1, 1, 9);
+            updateEmployeePane.add(txtEmpWage1, 1, 10);
+            
+            lblEmpName1.setVisible(false);
+            lblEmpPos1.setVisible(false);
+            lblEmpPhone1.setVisible(false);
+            lblEmpAddress1.setVisible(false);
+            lblEmpStatus1.setVisible(false);
+            lblEmpWage1.setVisible(false);
+            
+            txtEmpName1.setVisible(false);
+            
+            //txtEmpPos1.setVisible(false);
+            cmboEmpPosit.setVisible(false);
+            
+            txtEmpPhone1.setVisible(false);
+            txtEmpAddress1.setVisible(false);
+            cmboEmpStatus1.setVisible(false);
+            txtEmpWage1.setVisible(false);
+            
+            
+            Scene updateEmpScene = new Scene(updateEmployeePane, 500, 400);
+            Stage updateEmpStage = new Stage();
+            updateEmpStage.setScene(updateEmpScene);
+            updateEmpStage.setTitle("Update Employee");
+            updateEmpStage.show();
+        });
+        
+        rbUpdateEmp.setOnAction(e -> {
+            if (rbUpdateEmp.isSelected()) {
+                lblEmpName1.setVisible(true);
+                lblEmpPos1.setVisible(true);
+                lblEmpPhone1.setVisible(true);
+                lblEmpAddress1.setVisible(true);
+                lblEmpStatus1.setVisible(true);
+                lblEmpWage1.setVisible(true);
+                txtEmpName1.setVisible(true);
+                
+                //txtEmpPos1.setVisible(true);
+                cmboEmpPosit.setVisible(true);
+                
+                txtEmpPhone1.setVisible(true);
+                txtEmpAddress1.setVisible(true);
+                cmboEmpStatus1.setVisible(true);
+                txtEmpWage1.setVisible(true);
+            }
+            
+        });
+        
+        rbRemoveEmp.setOnAction(e -> {
+            if (rbRemoveEmp.isSelected()) {
+                lblEmpName1.setVisible(false);
+                lblEmpPos1.setVisible(false);
+                lblEmpPhone1.setVisible(false);
+                lblEmpAddress1.setVisible(false);
+                lblEmpStatus1.setVisible(false);
+                lblEmpWage1.setVisible(false);
+                
+                txtEmpName1.setVisible(false);
+                
+                //txtEmpPos1.setVisible(false);
+                cmboEmpPosit.setVisible(false);
+                
+                txtEmpPhone1.setVisible(false);
+                txtEmpAddress1.setVisible(false);
+                cmboEmpStatus1.setVisible(false);
+                txtEmpWage1.setVisible(false);
+            }
+        });
+        
+        
+        btnSaveChanges.setOnAction(e -> {
+            
+            int employeeIndex = cmboSelectEmp.getSelectionModel().getSelectedIndex();
+            Employee selectedEmployee = Employee.get(employeeIndex);
+            String empID = String.valueOf(selectedEmployee.getEmployeeID());
+            int empIDNum = selectedEmployee.getEmployeeID();
+            
+            boolean employeeSelection = cmboSelectEmp.getSelectionModel().isEmpty();
+            
+            if (employeeSelection) 
+                {
+                    aEditEmpEmpty.showAndWait();
+                }
+            else 
+            {
+                
+                RadioButton selectedRB = (RadioButton)tGroup.getSelectedToggle();
+                String tgValue = selectedRB.getText();
+                
+                if(rbRemoveEmp.isSelected()) {
+                    selectedEmployee.removeEmployee(selectedEmployee);
+                    empTableData.remove(selectedEmployee);
+                }
+                
+                if(rbUpdateEmp.isSelected()) {
+                    
+                    boolean newName = txtEmpName1.getText().trim().isEmpty();
+                    
+                    //boolean newPos = txtEmpPos1.getText().trim().isEmpty();
+                    boolean newPos = cmboEmpPosit.getItems().isEmpty();
+                  
+                    boolean newPhone = txtEmpPhone1.getText().trim().isEmpty();
+                    boolean newAddress = txtEmpAddress1.getText().trim().isEmpty();
+                    boolean newWage = txtEmpWage1.getText().trim().isEmpty();
+                    int newStatus = cmboEmpStatus1.getSelectionModel().getSelectedIndex();
+                    
+                    if(!newName) {
+                        selectedEmployee.setEmployeeName(txtEmpName1.getText());
+                        txtEmpName1.clear();
+                    }
+                    if (!newPos) {
+                        
+//                        selectedEmployee.setEmpPos(txtEmpPos1.getText());
+//                        txtEmpPos1.clear();
+                        
+                    //added
+                        selectedEmployee.setEmpPos((String)cmboEmpPosit.getSelectionModel().getSelectedItem());  
+                        cmboEmpPosit.getSelectionModel().clearSelection();
+                        
+                    }
+                    if(!newPhone) {
+                        selectedEmployee.setEmpPhone(txtEmpPhone1.getText());
+                        txtEmpPhone1.clear();
+                    }
+                    if(!newAddress) {
+                        selectedEmployee.setEmpAddress(txtEmpAddress1.getText());
+                        txtEmpAddress1.clear();
+                    }
+                    if (newStatus >= 0) {
+                        selectedEmployee.updateEmpStatus(newStatus);
+                        cmboEmpStatus1.getSelectionModel().clearSelection();
+                    }
+                    if(!newWage) {
+                        double newWage1 = Double.parseDouble(txtEmpWage1.getText());
+                        selectedEmployee.setEmpWage(newWage1);
+                        txtEmpWage1.clear();
+                    }
+                    
+                }
+                
+            }
+            
+        tblEmployee.refresh();
+        });
+    
+    // Expenses Button
+    btnExpenses.setOnAction(e -> {
+        
+        expensePane = new GridPane();
+        expensePane.setHgap(10);
+        expensePane.setVgap(10);
+        expensePane.setAlignment(Pos.CENTER);
+        expensePane.add(lblExpense, 0, 0);
+        //expensePane.add(lblExpFilter, 0, 1, 2, 1);
+        //expensePane.add(cmboExpFilter, 1, 1);
+        //expensePane.add(btnFilter, 2, 1);
+        expensePane.add(cmboExp, 0, 3);
+        expensePane.add(btnEditEx, 1, 3);
+        expensePane.add(btnAddExpense, 2, 3);
+        expensePane.add(tblExpenses, 0, 2, 3, 1);
+        Scene expenseScene = new Scene(expensePane, 600, 550);
+        Stage expenseStage = new Stage();
+        expenseStage.setScene(expenseScene);
+        expenseStage.setTitle("Thrifty Store Current Expenses");
+        expenseStage.show();
+        
+    });
+
+    //When click button Add Expense
+    btnAddExpense.setOnAction(e -> {
+        //Expense label
+        addExpensePane = new GridPane();
+        addExpensePane.setHgap(10);
+        addExpensePane.setVgap(10);
+        addExpensePane.setAlignment(Pos.CENTER);
+        addExpensePane.add(lblExpCat, 0, 0);
+        addExpensePane.add(lblExpAmount, 0, 1);
+        addExpensePane.add(lblExpDueDate, 0, 2);
+        addExpensePane.add(rdbExpPaid, 0, 3);
+        addExpensePane.add(rdbExpUnpaid, 1, 3);
+        //Expense text
+        addExpensePane.add(cmboExpenseCategory, 1,0);
+        addExpensePane.add(txtExpAmount, 1, 1);
+        addExpensePane.add(dueDate, 1, 2);
+        addExpensePane.add(btnAddNewExpense, 1, 4);
+        //clear the amount input when click the text box
+        txtExpAmount.setOnMousePressed(m ->{
+        txtExpAmount.clear();
+        });
+        Scene addExpenseScene = new Scene(addExpensePane, 500, 500);
+        Stage addExpenseStage = new Stage();
+        addExpenseStage.setScene(addExpenseScene);
+        addExpenseStage.setTitle("Add Expenses");
+        addExpenseStage.show();  
+   });
+
+    //when click button Add New Expense
+    btnAddNewExpense.setOnAction(e -> {
+        String expPaid = "";
+        dueDate.setOnAction(b -> {
+            dd = daySelection.getValue();
+        });
+        //Radio Button check for Paid/unpaid expense
+        if(rdbExpPaid.isSelected())
+            {
+                expPaid = "Paid";
+            }
+        else if (rdbExpUnpaid.isSelected())
+            {
+                expPaid = "Unpaid";
+            }
+        //if none button is checked, show error 
+        else
+            {
+                checkExpense.showAndWait();
+            }
+        {
+            String expCategory = (String)cmboExpenseCategory.getSelectionModel().getSelectedItem();
+            Double expAmount = Double.valueOf(txtExpAmount.getText());
+            String expDueDate = String.valueOf(dueDate.getValue());
+            //String expPaid = "";
+            Expense newExpense = new Expense(expCategory, expAmount, expDueDate, expPaid);
+              
+            Expense.add(newExpense);
+            expTableData.add(newExpense);
+            editExpenseList.add(newExpense.toString());
+                
+           // obsExp.add(Expense.get(expArrayPos).toString());
+            expArrayPos++;
+        }
+        cmboExpenseCategory.getSelectionModel().clearSelection();
+        txtExpAmount.clear();
+        dueDate.getEditor().clear();
+        rdbExpPaid.setSelected(false);
+        rdbExpUnpaid.setSelected(false);
+        
+        tblExpenses.refresh();
+        tblExpenses.setItems(expTableData);
+    }); //end of clicking add expense button 
+
+    // When Update Expense is selected 
+    btnEditEx.setOnAction(e -> {
+        
+    if(cmboExp.getSelectionModel().getSelectedIndex() >= 0)
+    {    
+       //Expense label
+        editExpensePane = new GridPane();
+        editExpensePane.setHgap(10);
+        editExpensePane.setVgap(10);
+        
+        editExpensePane.setAlignment(Pos.CENTER);
+        editExpensePane.add(lblExpCat2, 0, 0);
+        editExpensePane.add(lblExpAmount2, 0, 1);
+        editExpensePane.add(lblExpDueDate2, 0, 2);
+        editExpensePane.add(rdbExpPaid2, 0, 3);
+        editExpensePane.add(rdbExpUnpaid2, 1, 3);
+        //Expense text
+        editExpensePane.add(cmboExpenseCategory2, 1,0);
+        editExpensePane.add(txtExpAmount2, 1, 1);
+        editExpensePane.add(dueDate2, 1, 2);
+        editExpensePane.add(btnUpdateEx, 1, 4);
+        
+        //clear the amount input when click the text box
+        txtExpAmount2.setOnMousePressed(m ->{
+        txtExpAmount2.clear();
+        });
+        
+        Scene editExpenseScene = new Scene(editExpensePane, 500, 500);
+        Stage editExpenseStage = new Stage();
+        editExpenseStage.setScene(editExpenseScene);
+        editExpenseStage.setTitle("Update Expense");
+        editExpenseStage.show();
+    }
+    else 
+    {
+        Alert expenseSelectEmpty = new Alert(Alert.AlertType.ERROR);
+        expenseSelectEmpty.setContentText("Please select an Expense.");
+        expenseSelectEmpty.showAndWait();
+    } 
+    });
+
+    btnUpdateEx.setOnAction(e -> {
+        
+        int i = cmboExp.getSelectionModel().getSelectedIndex();
+        Expense selectedExpense = Expense.get(i);
+        
+
+        String expCategory = (String)cmboExpenseCategory2.getSelectionModel().getSelectedItem();
+        selectedExpense.setCategory(expCategory);
+
+        Double expAmount = Double.valueOf(txtExpAmount2.getText());
+        selectedExpense.setAmount(expAmount);
+
+        dueDate2.setOnAction(b -> {
+            dd = daySelection.getValue();
+        });
+        String expDueDate = String.valueOf(dueDate2.getValue());
+        selectedExpense.setDueDate(expDueDate);
+
+        String expPaid = "";
+
+        //Radio Button check for Paid/unpaid expense
+        if(rdbExpPaid2.isSelected())
+            {
+                expPaid = "Paid";
+            }
+        else if (rdbExpUnpaid2.isSelected())
+            {
+                expPaid = "Unpaid";
+            }
+        //if none button is checked, show error 
+        else
+            {
+                checkExpense.showAndWait();
+            }
+        selectedExpense.setPaid(expPaid);
+
+        editExpenseList.clear();
+        for(Expense exp: Expense)
+            {
+                editExpenseList.add(exp.toString());
+            }
+        
+        cmboExp.getSelectionModel().clearSelection();
+        cmboExpenseCategory2.getSelectionModel().clearSelection();
+        txtExpAmount2.clear();
+        dueDate2.getEditor().clear();
+        rdbExpPaid2.setSelected(false);
+        rdbExpUnpaid2.setSelected(false);
+        
+        tblExpenses.refresh();
+      
+
+    }); //end of clicking update expense button 
+    
+//    btnFilter.setOnAction(e -> {
+//    
+//    int filterSelect = cmboExpFilter.getSelectionModel().getSelectedIndex();
+//    
+//    switch(filterSelect)
+//    {
+//        case 0: 
+//            tblExpenses.getSortOrder().add(tblcCategory);
+//            break;
+//        case 1: 
+//            tblExpenses.getSortOrder().add(tblcAmount);
+//            break;
+//    }
+//     
+//    });
+
+    tblcCategory.setCellValueFactory(new PropertyValueFactory<Expense,String>("category"));
+    tblcAmount.setCellValueFactory(new PropertyValueFactory<Expense,Double>("amount"));
+    tblcDue.setCellValueFactory(new PropertyValueFactory<Expense,String>("dueDate"));
+    tblcPaid.setCellValueFactory(new PropertyValueFactory<Expense,String>("paid"));
+
+    // Inventory Button
+    btnInventory.setOnAction(e -> {
+    inventoryPane = new GridPane();
+    inventoryPane.setHgap(20);
+    inventoryPane.setVgap(20);
+    inventoryPane.setAlignment(Pos.CENTER);
+    inventoryPane.add(lblInventory, 0, 0);
+    inventoryPane.add(cmboInvItem, 0, 2);
+    inventoryPane.add(btnChangeImage, 1, 2);
+    inventoryPane.add(btnAddNewProd, 2, 2);
+    inventoryPane.add(tblInventory, 0, 1, 3, 1);
+    Scene invScene = new Scene(inventoryPane, 600, 650);
+    Stage invStage = new Stage();
+    invStage.setScene(invScene);
+    invStage.setTitle("Thrifty Store Inventory");
+    invStage.show();
+    });
+
+    btnAddNewProd.setOnAction(f -> {
+        addProductPane = new GridPane();
+        addProductPane.setAlignment(Pos.CENTER);
+        addProductPane.setVgap(10);
+        addProductPane.setHgap(5);
+        addProductPane.add(lblProdName, 0, 0);
+        addProductPane.add(lblProdWeight, 0, 1);
+        addProductPane.add(lblProdPricePaid, 0, 2);
+        addProductPane.add(lblProdSalePrice, 0, 3);
+        addProductPane.add(lblProdDesc, 0, 4);
+        addProductPane.add(lblSupplierName, 0, 5);
+        addProductPane.add(lblProdImage, 0, 6);
+        addProductPane.add(txtProdName, 1, 0);
+        addProductPane.add(txtProdWeight, 1, 1);
+        addProductPane.add(txtProdPricePaid, 1, 2);
+        addProductPane.add(txtProdSalePrice, 1, 3);
+        addProductPane.add(txtProdDesc, 1, 4);
+        addProductPane.add(txtSupplierName, 1, 5); // Should be a ComboBox
+        addProductPane.add(cmboProdImage, 1, 6);
+        addProductPane.add(btnAddProd, 2, 7);
+        Scene addProdScene = new Scene(addProductPane, 500, 400);
+        Stage addProdStage = new Stage();
+        addProdStage.setScene(addProdScene);
+        addProdStage.setTitle("Add Product");
+        addProdStage.show();
+    });
+
+   btnAddProd.setOnAction(g -> {
+        boolean eProdName = txtProdName.getText().trim().isEmpty();
+        boolean eProdWeight = txtProdWeight.getText().trim().isEmpty();
+        boolean eProdPricePaid = txtProdPricePaid.getText().trim().isEmpty();
+        boolean eProdSalePrice = txtProdSalePrice.getText().trim().isEmpty();
+        boolean eProdDesc = txtProdDesc.getText().trim().isEmpty();
+        boolean eSupplierName = txtSupplierName.getText().trim().isEmpty();
+        if(eProdName || eProdWeight || eProdPricePaid || eProdSalePrice || eProdDesc || eSupplierName)
+        {
+            addProdEmpty.showAndWait();
+        }
+        else
+        {
+            String prodName = txtProdName.getText();
+            double prodWeight = Double.valueOf(txtProdWeight.getText());
+            double prodPrice = Double.valueOf(txtProdPricePaid.getText());
+            double prodSPrice = Double.valueOf(txtProdSalePrice.getText());
+            String prodDesc = txtProdDesc.getText();
+            String prodSupp = txtSupplierName.getText();
+            Product.add(new Product(prodName, prodWeight, prodDesc, prodPrice, prodSPrice, prodSupp));
+            txtProdName.clear();
+            txtProdWeight.clear();
+            txtProdPricePaid.clear();
+            txtProdSalePrice.clear();
+            txtProdDesc.clear();
+            txtSupplierName.clear();
+           for (Product pro: Product)
+           {
+                prodTableData.add(pro);
+           }
+            obsProduct.add(Product.get(prodArrayPos).getProductName());  
+            prodArrayPos++;
+        }
+    });
+
+    tblInventory.setItems(prodTableData);
+    //add value to each column 
+    //tblcImage.setCellValueFactory(new PropertyValueFactory<Employee,String>("EmployeeName"));
+    tblcProduct.setCellValueFactory(new PropertyValueFactory<Product,String>("ProductName")); 
+    tblcStock.setCellValueFactory(new PropertyValueFactory<Product,Integer>("ProductQuantity")); 
+    //tblcIncoming.setCellValueFactory(new PropertyValueFactory<Product,Integer>(""));
+    //tblcDiscarded.setCellValueFactory(new PropertyValueFactory<Product,Integer>(""));
+//TableColumn tblcImage = new TableColumn("Image");
+
+//        TableColumn tblcProduct = new TableColumn("Product");
+//        TableColumn tblcStock = new TableColumn("# in Stock");
+//        TableColumn tblcIncoming = new TableColumn("Amount Incoming");
+//        TableColumn tblcDiscarded = new TableColumn("# Discarded");
+    // Supplier Button
+    btnSupplier.setOnAction(e -> {
+    supplierPane = new GridPane();
+    supplierPane.setAlignment(Pos.CENTER);
+    supplierPane.add(lblSupplier, 0, 0);
+    supplierPane.add(cmboSupplier, 1, 0);
+    supplierPane.add(txtSupInfo, 0, 1, 2, 1);
+    supplierPane.add(btnAddSup, 0, 3);
+    supplierPane.add(btnRemSup, 1, 3);
+    supplierPane.add(tblSuppliers, 0, 2, 2, 1);
+    supplierPane.setHgap(20);
+    supplierPane.setVgap(20);
+    Scene supplierScene = new Scene(supplierPane, 500, 550);
+    Stage supplierStage = new Stage();
+    supplierStage.setScene(supplierScene);
+    supplierStage.setTitle("Thrifty Store Suppliers");
+    supplierStage.show();
+    txtSupInfo.setEditable(false);
+    });
+
+    //when click button Create new supplier
+     btnAddSup.setOnAction(e ->{
+        addSupplierPane = new GridPane();
+        addSupplierPane.setAlignment(Pos.CENTER);
+        addSupplierPane.setVgap(10);
+        addSupplierPane.setHgap(5);
+    // Labels 
+        addSupplierPane.add(lblSupName, 0, 0); 
+        addSupplierPane.add(lblSupAddress, 0, 1);
+        addSupplierPane.add(lblSupPhone, 0, 2);
+        addSupplierPane.add(txtSupName, 1, 0); // TextFields
+        addSupplierPane.add(txtSupAddress, 1, 1);
+        addSupplierPane.add(txtSupPhone, 1, 2);
+        addSupplierPane.add(btnAddNewSup, 1, 5);
+    Scene addSupScene = new Scene(addSupplierPane, 400, 300);
+    Stage addSupStage = new Stage();
+    addSupStage.setScene(addSupScene);
+    addSupStage.setTitle("Add Supplier");
+    addSupStage.show();
+    });
+
+    //When click button Add new Supplier
+    btnAddNewSup.setOnAction(e -> {
+        boolean newSupName = txtSupName.getText().trim().isEmpty();
+        boolean newSupAddress = txtSupAddress.getText().trim().isEmpty();
+        boolean newSupPhone = txtSupPhone.getText().trim().isEmpty();        
+        if(newSupName || newSupAddress || newSupPhone )
+        {
+            addSupEmpty.showAndWait();
+        }
+        else
+        {
+            String getNewSupName = txtSupName.getText();
+            String getNewSupAddress = txtSupAddress.getText();
+            String getNewSupPhone = txtSupPhone.getText();
+            Supplier.add (new Supplier(getNewSupName, getNewSupAddress, getNewSupPhone));
+            obsSupplier.add(Supplier.get(supArrayPos).getSupplierName());
+            supArrayPos++;
+            if (cmboSupplier.getSelectionModel().getSelectedIndex() >= 0)
+            {
+            txtSupInfo.appendText(Supplier.get(cmboSupplier.getSelectionModel().getSelectedIndex()).toString());
+            }
+            txtSupName.clear();
+            txtSupAddress.clear();
+            txtSupPhone.clear();
+//                for (Supplier sup: supplierList)
+//                {
+//                    supplierTableData.add(sup);
+//                }
+        }
+    });  //end of button AddNewSup
+
+//        tblSupplier.setItems(supplierTableData);
+//        add value to each column 
+//        tblcSupName.setCellValueFactory(new PropertyValueFactory<Supplier,String>("supplierName"));
+//        tblcSupAddress.setCellValueFactory(new PropertyValueFactory<Supplier,String>("supplierAddress")); 
+//        tblcSupPhone.setCellValueFactory(new PropertyValueFactory<Supplier,String>("supplierPhone"));
+    btnSchedule.setOnAction(e -> {
+    schedulePane = new GridPane();
+    schedulePane.add(lblDaySelection, 0, 0);
+    schedulePane.add(daySelection, 0, 1, 3, 1); 
+    schedulePane.add(lblStartTime, 0, 2);
+    schedulePane.add(cmboStartTime, 0, 3);
+    schedulePane.add(lblEndTime, 2, 2);
+    schedulePane.add(cmboEndTime, 2, 3);
+    schedulePane.add(cmboEmpSch, 1, 4);
+    schedulePane.add(btnAddEmpSch, 1, 5);
+    schedulePane.setHgap(10);
+    schedulePane.setVgap(10);   
+    Scene scheduleScene = new Scene(schedulePane, 400, 400);
+    Stage scheduleStage = new Stage();
+    scheduleStage.setScene(scheduleScene);
+    scheduleStage.setTitle("Thrifty Store Schedule");
+    scheduleStage.show();
+        daySelection.setOnAction(b -> {
+            ds = daySelection.getValue();
+
+        });
+        btnAddEmpSch.setOnAction(c -> {
+            if(cmboEmpSch.getSelectionModel().getSelectedIndex() >= 0 &&
+                    cmboStartTime.getSelectionModel().getSelectedIndex() >= 0 &&
+                    cmboEndTime.getSelectionModel().getSelectedIndex() >= 0 &&
+                    daySelection != null)
+            {
+                //Schedule.Employee.add(Employee.get(cmboEmpSch.getSelectionModel().getSelectedIndex()));
+                Shifts.add(new Schedule(Employee.get(cmboEmpSch.getSelectionModel().getSelectedIndex()),
+                String.valueOf(daySelection.getValue()),
+                String.valueOf(cmboStartTime.getSelectionModel().getSelectedItem()), 
+                String.valueOf(cmboEndTime.getSelectionModel().getSelectedItem())));
+            }
+            cmboStartTime.getSelectionModel().clearSelection();
+            cmboEndTime.getSelectionModel().clearSelection();
+            cmboEmpSch.getSelectionModel().clearSelection();
+        });
+    });
+    
+    btnCreateCustAccount.setOnAction(e -> {
+        custAcctPane = new GridPane();    
+        custAcctPane.add(lblCustName, 0, 0);
+        custAcctPane.add(txtCustName, 1, 0);
+        custAcctPane.add(lblCustPhone, 0, 1);
+        custAcctPane.add(txtCustPhone, 1, 1);
+        custAcctPane.add(lblCustAddress, 0, 2);
+        custAcctPane.add(txtCustAddress, 1, 2);
+        custAcctPane.add(lblCustEmail, 0, 3);
+        custAcctPane.add(txtCustEmail, 1, 3);
+        custAcctPane.add(chkThriftyClub, 1, 4);
+        custAcctPane.add(btnNewCustAccount, 0, 5, 2, 1);
+        custAcctPane.setHgap(10);
+        custAcctPane.setVgap(15);
+        custAcctPane.setAlignment(Pos.CENTER);
+        Scene custAcctScene = new Scene(custAcctPane, 400, 400);
+        Stage custAcctStage = new Stage();
+        custAcctStage.setScene(custAcctScene);
+        custAcctStage.setTitle("Thrifty Store Schedule");
+        custAcctStage.show();
+
+        btnNewCustAccount.setOnAction(f -> {
+
+        if(chkThriftyClub.isSelected())
+        {
+            if(txtCustName.getText().length() > 0 &&
+                    txtCustPhone.getText().length() > 0 &&
+                    txtCustAddress.getText() == null &&
+                    txtCustEmail.getText() == null)
+            {
+                Customer.add(new Customer(txtCustName.getText(), txtCustPhone.getText(), true));
+            }
+            else
+            {
+                Customer.add(new Customer(txtCustName.getText(), txtCustPhone.getText(),
+                txtCustAddress.getText(), txtCustEmail.getText(), true));
+            }
+        }
+        else
+        {
+            if(txtCustName.getText().length() > 0 &&
+                    txtCustPhone.getText().length() > 0 &&
+                    txtCustAddress.getText() == null &&
+                    txtCustEmail.getText() == null)
+            {
+                Customer.add(new Customer(txtCustName.getText(), txtCustPhone.getText(), false));
+            }
+            else
+            {
+                Customer.add(new Customer(txtCustName.getText(), txtCustPhone.getText(),
+                txtCustAddress.getText(), txtCustEmail.getText(), false));
+            }
+        }
+
+        txtCustName.clear();
+        txtCustPhone.clear();
+        txtCustAddress.clear();
+        txtCustEmail.clear();
+        chkThriftyClub.setSelected(false);
+        //System.out.println(Customer.get(0).toString());
+
+        });
+    });
+    }
+
+    public static void main(String[] args) 
+    {
+        launch(args);
+    }
+    @Override
+    public void stop() {
+        
+    }
+    
+    public void sendDBCommand(String sqlQuery)
+    {
+        String URL = "jdbc:oracle:thin:@localhost:1521:XE";
+        String userID = "javauser"; 
+        String userPASS = "javapass"; 
+        OracleDataSource ds;
+        Connection dbConn;
+        Statement cmmtStmt;
+        ResultSet dbResults;
+       
+        System.out.println(sqlQuery);
+        
+        try
+        {
+            dbConn = getDBConnection(URL,userID,userPASS);
+            cmmtStmt = dbConn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            dbResults = cmmtStmt.executeQuery(sqlQuery); 
+            
+        
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.toString());
+        }
+    }
+    public static Connection getDBConnection(String url, 
+            String user, 
+            String pass) throws SQLException
+    {
+        OracleDataSource ds = new OracleDataSource();
+        ds.setURL(url);
+        return ds.getConnection(user, pass);
+    }
+
+}
