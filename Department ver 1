@@ -1,0 +1,52 @@
+public class Department {
+
+   
+    public int storeID;
+
+    public int employeeID;
+
+    
+
+    public Department (int storeID, int employeeID)
+
+    {
+
+        this.storeID = storeID;
+
+        this.employeeID = employeeID;
+
+    }
+
+    
+
+     public int getStoreID()
+
+    {
+
+        return this.storeID;
+
+    }
+
+     
+
+      public int getEmployeeID()
+
+    {
+
+        return this.employeeID;
+
+    }
+
+    
+
+    public String toString()
+
+    {
+
+        return "Store ID: " + this.storeID + "\n" +
+
+                "Employee ID: " + this.employeeID;
+
+    }
+
+}
