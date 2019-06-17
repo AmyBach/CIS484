@@ -1,0 +1,93 @@
+public class Store {
+   
+   //Data Fields
+
+    public int storeID;
+
+    public String storeName;
+
+    private String customerPayment;
+
+    
+
+    public int nextStoreID = 0;
+
+    
+
+    //constructor
+
+    
+
+    public Store(String storeName, String customerPayment)
+
+    {
+
+        this.storeID = nextStoreID++;
+
+        this.storeName = storeName;
+
+        this.customerPayment = customerPayment;
+
+    }
+
+    
+
+    //Methods
+
+    
+
+    public int getStoreID()
+
+    {
+
+        return this.storeID;
+
+    }
+
+    
+
+    public String getStoreName()
+
+    {
+
+        return this.storeName;
+
+    }
+
+    
+
+    public String getCustomerPayment()
+
+    {
+
+        return this.customerPayment;
+
+    }
+
+    
+
+    public void setCustomerPayment(String payment)
+
+    {
+
+        this.customerPayment = payment;
+
+    }
+
+    
+
+    public String toString()
+
+    {
+
+        return "Store Name: " + this.storeName + "\n" +
+
+                "Store ID" + this.storeID;
+
+                
+
+    }
+
+    
+
+}
