@@ -1,0 +1,115 @@
+import java.util.*;
+
+
+public class Employee
+{
+  // Data Fields 
+   public static ArrayList<Employee> Employee = new ArrayList<Employee>();
+   
+   public int employeeID; 
+   public String employeeName; 
+   public String employeePosition;
+   public String employeePhone;
+   public String employeeAddress;
+   public String employeeStatus;
+   public double employeeWage;
+   
+   public static int nextEmpID = 0;
+   
+   // Constructor
+   public Employee(String Name, String Position, String Phone, String Address, int Status, double Wage)
+   {
+     this.employeeName = Name;
+     this.employeePosition = Position; 
+     this.employeePhone = Phone; 
+     this.employeeAddress = Address;
+     this.employeeStatus = setEmpStatus(Status);
+     this.employeeWage = Wage;
+     this.employeeID = nextEmpID++;
+   }
+   
+   // Member Methods
+   // Getters
+   public int getEmployeeID()
+   {
+       return this.employeeID; 
+   }
+   public String getEmployeeName()
+   {
+       return this.employeeName; 
+   }
+   public void setEmployeeName(String name) {
+       this.employeeName = name;
+   }
+   public String getEmployeePos()
+   {
+       return this.employeePosition; 
+   }
+   public String getEmployeeAddress()
+   {
+       return this.employeeAddress; 
+   }
+   public String getEmployeePhone()
+   {
+       return this.employeePhone; 
+   }
+   public double getEmployeeWage()
+   {
+       return this.employeeWage; 
+   }
+   // Setters
+   public void setEmpPos(String newPos)
+   {
+       this.employeePosition = newPos;
+   }
+   public void setEmpAddress(String newAddress)
+   {
+       this.employeeAddress = newAddress;
+   }
+   public void setEmpPhone(String newPhone)
+   {
+       this.employeePhone = newPhone;
+   }
+   
+   public void setEmpWage(double newWage)
+   {
+       this.employeeWage = newWage;
+   }
+   
+   public String getEmpStatus() {
+        return this.employeeStatus;
+    }
+   
+   public String setEmpStatus(int Status) {
+       String status = "";
+       
+       switch(Status) {
+           case 0: status = "Part-Time";
+            break;
+           case 1: status = "Full-Time";
+            break;
+           default: status = "null";
+       }
+       return status;
+   }
+   
+   public void updateEmpStatus(int Status) {
+       switch(Status) {
+           case 0: this.employeeStatus = "Part-Time";
+            break;
+           case 1: this.employeeStatus = "Full-Time";
+            break;
+       }
+   }
+   
+   public void removeEmployee(Employee emp) {
+       this.Employee.remove(emp);
+   }
+   
+  @Override
+   public String toString() 
+   {
+      return "Employee ID: " + this.getEmployeeID() + " Employee Name: " + this.getEmployeeName();
+              
+   }
+}
