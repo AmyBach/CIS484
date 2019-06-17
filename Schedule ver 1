@@ -1,0 +1,101 @@
+public class Schedule 
+
+{
+    
+    public int shiftNumID;
+    
+    public String date;
+
+    public String begTime; 
+
+    public String endTime;
+    
+    public Employee emp;
+
+    
+
+    public static int nextShiftID = 0; 
+
+    
+
+    // Constructors
+
+    public Schedule(Employee emp, String date, String begHour, String endHour)
+
+    { 
+
+        this.emp = emp;
+        
+        this.date = date;
+        
+        this.begTime = begHour;
+
+        this.endTime = endHour; 
+
+        this.shiftNumID = nextShiftID++; 
+
+        
+
+    }
+
+    
+
+    // Member Methods
+
+    public int getShiftID()
+
+    {
+
+        return this.shiftNumID;
+
+    }
+
+    
+
+    public String getShiftTime()
+
+    {
+
+        return "Shift Time: " + this.begTime + " - " + this.endTime;
+
+    }
+    
+    
+    public String getDate()
+    {
+        return this.date;
+    }
+    
+
+    public void setBegHour(String newBegHour)
+
+    {
+
+        this.begTime = newBegHour;
+
+    }
+
+    
+
+    public void setEndHour(String newEndHour)
+
+    {
+
+        this.endTime = newEndHour;
+
+    }
+
+    
+
+    @Override
+
+    public String toString()
+
+    {
+
+        return "Shift ID: " + this.getShiftID() + " Employee: " + this.emp.getEmployeeName() + " " +  this.getDate() + " " + this.getShiftTime();
+
+    }
+
+
+}
