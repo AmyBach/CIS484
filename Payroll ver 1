@@ -1,0 +1,88 @@
+import java.util.ArrayList;
+
+
+public class Payroll 
+
+{
+
+    // Data Fields
+
+    public static ArrayList<Employee> Employee = new ArrayList<Employee>();
+
+    
+
+    public int payrollID; 
+
+    public String payrollPeriod; 
+
+    public ArrayList<Employee> payrollEmployees = new ArrayList<>();
+
+    
+
+    public static int nextPayrollID = 0;
+
+    
+
+    // Constructor
+
+    public Payroll(String Dates)
+
+    {
+
+        this.payrollPeriod = Dates;
+
+        this.payrollID = nextPayrollID++;
+
+    }
+
+    
+
+    // Member Methods
+
+    public String getPayrollPeriod()           
+
+    {
+
+        return this.payrollPeriod;
+
+    }
+
+    
+
+    public int getPayrollID()
+
+    {
+
+        return this.payrollID;
+
+    }
+
+    
+
+    // Add employeee to this Employee Payroll List 
+
+    public void addEmpToPay(Employee employee)
+
+    {
+
+        payrollEmployees.add(employee);
+
+    }
+
+    
+
+    @Override
+
+    public String toString()
+
+    {
+
+        return "Payroll ID Number: " + this.payrollID + 
+
+               " Payroll Period: " + this.getPayrollPeriod(); 
+
+    }
+
+   
+
+}
