@@ -1,0 +1,86 @@
+import java.util.*;
+
+public class SupplyOrder {
+    
+    // Variables
+    public int supplyOrderID;
+    public String supplyOrderDesc;
+    public Date supplyOrderDate;
+    public int supplyOrderQuantity;
+    public String supplyOrderShipping;
+    public int supplierID;
+    
+    // Constructor
+    public SupplyOrder(int supplyOrderID, String supplyOrderDesc, Date supplyOrderDate, int supplyOrderQuantity, String supplyOrderShipping, int supplierID)
+    {
+        this.supplyOrderID = supplyOrderID;
+        this.supplyOrderDesc = supplyOrderDesc;
+        this.supplyOrderDate = supplyOrderDate;
+        this.supplyOrderQuantity = supplyOrderQuantity;
+        this.supplyOrderShipping = supplyOrderShipping;
+        this.supplierID = supplierID;
+    }
+    
+    // Getters/Setters
+    public int getSupplyOrderID()
+    {
+        return supplyOrderID;
+    }
+    public void setSupplyOrderID(int supplyOrderID)
+    {
+        this.supplyOrderID = supplyOrderID;
+    }
+    
+    public String getSupplyOrderDesc()
+    {
+        return supplyOrderDesc;
+    }
+    public void setSupplyOrderDesc(String supplyOrderDesc)
+    {
+        this.supplyOrderDesc = supplyOrderDesc;
+    }
+    
+    public Date getSupplyOrderDate()
+    {
+        return supplyOrderDate;
+    }
+    public void setSupplyOrderDate(Date supplyOrderDate)
+    {
+        this.supplyOrderDate = supplyOrderDate;
+    }
+    
+    public int getSupplyOrderQuantity()
+    {
+        return supplyOrderQuantity;
+    }
+    public void setSupplyOrderQuantity(int supplyOrderQuantity)
+    {
+        this.supplyOrderQuantity = supplyOrderQuantity;
+    }
+    
+    public String getSupplyOrderShipping()
+    {
+        return supplyOrderShipping;
+    }
+    public void setSupplyOrderShipping(String supplyOrderShipping)
+    {
+        this.supplyOrderShipping = supplyOrderShipping;
+    }
+    
+    public int getSupplierID()
+    {
+        return supplierID;
+    }
+    public void setSupplierID(int supplierID)
+    {
+        this.supplierID = supplierID;
+    }
+    
+    
+    // toString Method
+    @Override
+    public String toString()
+    {
+        return "Filler string until we know what to put in the toString method";
+    }
+}
