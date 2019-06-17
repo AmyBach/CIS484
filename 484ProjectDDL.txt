@@ -1,0 +1,87 @@
+set echo off;
+set wrap off;
+
+Create table Customer
+(customerID Integer Primary Key,
+Name VarChar(30),
+Address VarChar(50),
+Phone Integer);
+
+Create table Product
+(productID Integer Primary Key,
+Price Number(6,2),
+Category VarChar(25),
+Quantity Integer);
+
+Create table Supplier
+(supplierID Integer Primary Key,
+Name VarChar(30),
+Address VarChar(50),
+Phone Integer);
+
+Create table Store
+(storeID Integer Primary Key,
+Name VarChar(30),
+Address VarChar(50),
+Phone Integer);
+
+Create table Employee
+(employeeID Integer Primary Key,
+Name VarChar(30),
+Position VarChar(25),
+Address VarChar(50),
+Phone Integer,
+Type VarChar(20),
+Wage Number(3,2),
+Username VarChar(30),
+Password VarChar(30));
+
+Create table Department
+(departmentID Integer Primary Key,
+Name VarChar(30));
+
+Create table TimeShift
+(shiftNumID Integer Primary Key,
+begTime Integer,
+endTime Integer,
+TSDate VarChar(11));
+
+Create table Expense
+(expenseID Integer Primary Key,
+Name VarChar(30),
+Amount Number(6,2),
+DueDate VarChar(11));
+
+Create table Payroll
+(payrollID Integer Primary Key,
+shiftNumID Integer,
+payrollPeriod VarChar(20),
+Foreign Key(shiftNumID) REFERENCES TimeShift);
+
+Create table CustomerOrder
+(custOrderID Integer Primary Key,
+customerID Integer,
+Total Number(6,2),
+CODate VarChar(11),
+Foreign Key (customerID) REFERENCES Customer);
+
+Create table SupplyOrder
+(supplierID Integer,
+productID Integer,
+Description VarChar(50),
+SODate VarChar(11),
+Quantity Integer,
+Shipping VarChar(20),
+Primary Key (supplierID,productID),
+Foreign Key (supplierID) REFERENCES Supplier,
+Foreign Key (productID) REFERENCES Product);
+
+Create table ProductOrder
+(productID Integer,
+custOrderID Integer,
+Quantity Integer,
+Primary Key (productID,custOrderID),
+Foreign Key (productID) REFERENCES Product,
+Foreign Key (custOrderID) REFERENCES CustomerOrder);
+
+commit work;
