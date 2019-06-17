@@ -1,0 +1,368 @@
+public class Product {
+
+// Variables
+   
+    public String productName;
+
+    public String productCategory;
+
+    public int productQuantity;
+
+    public String supplierName;
+
+    public double productWeight;
+
+    private double pricePaid;
+
+    private double salePrice;
+
+    public String productDescription;
+    
+//added
+    private int productID; 
+    
+    private static int nextID = 0;
+
+    private int count = 0;
+
+//Declare static variable to count the number of item object
+
+    private static int countItem;     
+
+    
+
+    // Constructor
+
+  
+
+    public Product(String productName,double weight, String productDescription,
+
+        double pricePaid, double salePrice, String supplierName)
+
+    {
+
+        
+
+        this.productName = productName;
+
+        this.productWeight = weight;
+
+        this.pricePaid = pricePaid;
+
+        this.salePrice = salePrice;
+
+        this.productDescription = productDescription; 
+
+        this.supplierName = supplierName;
+
+        this.productID = nextID++;
+
+        //this.count = count;
+
+        this.productQuantity += this.count;
+        
+
+    }
+
+    
+
+    // Getters/Setters
+
+    public int getProductID()
+
+    {
+
+        return productID;
+
+    }
+
+    public void setProductID(int productID)
+
+    {
+
+        this.productID = productID;
+
+    }
+
+    
+
+    public String getProductName()
+
+    {
+
+        return productName;
+
+    }
+
+    public void setProductName(String productName)
+
+    {
+
+        this.productName = productName;
+
+    }
+
+    
+
+//    public double getProductPrice()
+//
+//    {
+//
+//        return productPrice;
+//
+//    }
+//
+//    public void setProductPrice(double productPrice)
+//
+//    {
+//
+//        this.productPrice = productPrice;
+//
+//    }
+
+    
+
+    public String getProductCategory()
+
+    {
+
+        return productCategory;
+
+    }
+
+    public void setProductCategory(String productCategory)
+
+    {
+
+        this.productCategory = productCategory;
+
+    }
+
+    
+
+    public int getProductQuantity()
+
+    {
+
+        return productQuantity;
+
+    }
+
+    public void setProductQuantity(int productQuantity)
+
+    {
+
+        this.productQuantity = productQuantity;
+
+    }
+
+    
+
+    
+
+    // toString Method
+
+    @Override
+
+    public String toString()
+
+    {
+
+        return "Filler string until we know what to put in the toString method";
+
+    }
+
+    
+
+    
+
+ //Newly added  
+
+    public void setCount(int count) {
+
+        this.count = count;
+
+    }
+
+ 
+
+    //getter setter for Price Paid  
+
+    public double getPricePaid()
+
+    {
+
+        return pricePaid;
+
+    }
+
+
+
+    public void setPricePaid(double pricePaid)
+
+    {
+
+        //validate the price paid 
+
+        if (pricePaid <= 0.0) {
+
+            System.out.println("Invalid Price");
+
+        }
+
+            this.pricePaid = pricePaid; 
+
+    }
+
+
+
+    
+
+    //getter and setter for sale price
+
+    public double getSalePrice()
+
+    {
+
+        return salePrice;
+
+    }
+
+    
+
+    //getter setter for Sale Price
+
+    public void setSalePrice(double salePrice)
+
+    {
+
+        if(salePrice <= 0.0) {
+
+            System.out.println("Invalid Input Sale Price!");
+
+        }
+
+            this.salePrice = salePrice;
+
+    }
+
+    
+
+    //getter setter for Supplier
+
+    public String getSupplierName() 
+
+    {
+
+        return supplierName;
+
+    }
+    
+//    public void setSupplierName(String supplierName)
+//    {
+//        this.supplierName = supplierName;
+//    }
+
+    
+
+    //getter setter to add items
+
+    public void setCountProduct(int countItem) {
+
+        this.countItem = countItem;
+
+        countItem++;
+
+    }
+
+
+
+    public int getCountItem() {
+
+
+
+	return countItem;
+
+    }
+
+    
+
+    //Count the up-to-date quantity of each product 
+
+    public int getCount()
+
+    {
+
+        return count;
+
+    }
+
+    
+
+    //quantity of items sold 
+
+    public void soldProduct(int q)
+
+    {
+
+        this.count = count - q;
+
+    }
+
+
+
+    //getter setter product weight
+
+    public void setProductWeight(double weight) 
+
+    {
+
+        this.productWeight = weight;
+
+    }
+
+    
+
+    public double getProductWeight() 
+
+    {
+
+        return productWeight;
+
+    }
+
+    
+
+    //getter setter product description  
+
+    public void setProductDescription(String productDescription) 
+
+    {
+
+        this.productDescription = productDescription;
+
+    }
+
+    
+
+    public String getProductDescription() 
+
+    {
+
+        return productDescription;
+
+    }
+
+    
+
+    //assign ID for each product - product ID should be assigned automatically as new product is added. 
+
+//    public int getProductID() 
+//
+//    {
+//
+//        return this.productID;
+//
+//    }
+
+    
