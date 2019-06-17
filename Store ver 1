@@ -1,6 +1,6 @@
 public class Store {
    
-   //Data Fields
+//Data Fields
 
     public int storeID;
 
@@ -8,16 +8,14 @@ public class Store {
 
     private String customerPayment;
 
-    
-
+ 
     public int nextStoreID = 0;
-
     
-
-    //constructor
-
+    //newly added with ID class
+    public ID newStoreID;
     
-
+   
+//constructor
     public Store(String storeName, String customerPayment)
 
     {
@@ -27,9 +25,13 @@ public class Store {
         this.storeName = storeName;
 
         this.customerPayment = customerPayment;
+        
+        //added
+        this.newStoreID = new ID();
 
     }
 
+    
     
 
     //Methods
@@ -44,6 +46,12 @@ public class Store {
 
     }
 
+    //added new store ID from ID class 
+    public int getNewStoreID()
+    {
+        //method getIDNumber is already declared in the ID class
+        return newStoreID.getIdNumber();
+    }
     
 
     public String getStoreName()
