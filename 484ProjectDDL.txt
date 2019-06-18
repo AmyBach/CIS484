@@ -11,6 +11,7 @@ Member VarChar(5));
 
 Create table Product
 (productID Integer Primary Key,
+Name VarChar(30),
 Price Number(6,2),
 Category VarChar(25),
 Quantity Integer,
