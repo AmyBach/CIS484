@@ -54,7 +54,8 @@ Create table Expense
 (expenseID Integer Primary Key,
 Name VarChar(30),
 Amount Number(6,2),
-DueDate VarChar(11));
+DueDate VarChar(11)
+Paid VarChar(15));
 
 Create table Payroll
 (payrollID Integer Primary Key,
@@ -92,5 +93,8 @@ Insert into Employee (employeeID,Name,Position,Address,Phone,Type,Wage)
 Values (0,'Zach Wagner','Manager','757 Chim Cir',5405323217,'Full-Time',35.5);
 Insert into Employee (employeeID,Name,Position,Address,Phone,Type,Wage) 
 Values (1,'Tyler Davis','Manager','18 Slim Rd',5408681229,'Full-Time',33.0);
+
+INSERT INTO SUPPLIER (supplierID,NAME,ADDRESS,PHONE) 
+VALUES (0,'Walmart','767 Wally Dr',5493893849);
 
 commit work;
