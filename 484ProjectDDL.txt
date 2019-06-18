@@ -5,13 +5,16 @@ Create table Customer
 (customerID Integer Primary Key,
 Name VarChar(30),
 Address VarChar(50),
-Phone Integer);
+Phone Integer,
+Email VarChar(30),
+Member VarChar(5));
 
 Create table Product
 (productID Integer Primary Key,
 Price Number(6,2),
 Category VarChar(25),
-Quantity Integer);
+Quantity Integer,
+Description VarChar(70));
 
 Create table Supplier
 (supplierID Integer Primary Key,
@@ -31,8 +34,8 @@ Name VarChar(30),
 Position VarChar(25),
 Address VarChar(50),
 Phone Integer,
-Type VarChar(20),
-Wage Number(3,2),
+Type Integer,
+Wage Number(6,2),
 Username VarChar(30),
 Password VarChar(30));
 
