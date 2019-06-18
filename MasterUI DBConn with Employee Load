@@ -1416,6 +1416,7 @@ ResultSet dbResults;
                 Employee.add(newEmployee);
                 empTableData.add(newEmployee);
                 obsEmp.add(Employee.get(empArrayPos).getEmployeeName());
+                empArrayPos++;
             }
             dbResults.close();
         }
