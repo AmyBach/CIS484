@@ -1308,7 +1308,7 @@ ResultSet dbResults;
         }
         for (int i=0;i<Product.size();i++){
             Product tempProd = Product.get(i);
-            String sqlQuery = "INSERT INTO CUSTOMER (productID,NAME,PRICE,CATEGORY,QUANTITY,DESCRIPTION) "
+            String sqlQuery = "INSERT INTO PRODUCT (productID,NAME,PRICE,CATEGORY,QUANTITY,DESCRIPTION) "
                     + "VALUES ("+tempProd.getProductID()+",\'"+tempProd.getProductName()
                     +"\',"+tempProd.getSalePrice()+",\'"+tempProd.getProductCategory()
                     +"\',"+tempProd.getProductQuantity()+",\'"+tempProd.getProductDescription()+"\')";
