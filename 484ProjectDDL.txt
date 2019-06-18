@@ -87,4 +87,9 @@ Primary Key (productID,custOrderID),
 Foreign Key (productID) REFERENCES Product,
 Foreign Key (custOrderID) REFERENCES CustomerOrder);
 
+Insert into Employee (employeeID,Name,Position,Address,Phone,Type,Wage) 
+Values (0,'Zach Wagner','Manager','757 Chim Cir',5405323217,'Full-Time',35.5);
+Insert into Employee (employeeID,Name,Position,Address,Phone,Type,Wage) 
+Values (1,'Tyler Davis','Manager','18 Slim Rd',5408681229,'Full-Time',33.0);
+
 commit work;
