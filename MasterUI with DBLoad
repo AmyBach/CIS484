@@ -1,5 +1,3 @@
-package GroupProject;
-
 import java.util.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -1271,6 +1269,7 @@ ResultSet dbResults;
                 txtCustAddress.getText(), txtCustEmail.getText(), false));
             }
         }
+        
 
         txtCustName.clear();
         txtCustPhone.clear();
@@ -1282,6 +1281,7 @@ ResultSet dbResults;
         });
     });
     loadEmployeeDB();
+    loadSupplierDB();
     }
 
     public static void main(String[] args) 
@@ -1312,6 +1312,21 @@ ResultSet dbResults;
                     + "VALUES ("+tempProd.getProductID()+",\'"+tempProd.getProductName()
                     +"\',"+tempProd.getSalePrice()+",\'"+tempProd.getProductCategory()
                     +"\',"+tempProd.getProductQuantity()+",\'"+tempProd.getProductDescription()+"\')";
+            sendDBCommand(sqlQuery);
+        }
+        for (int i=0;i<Expense.size();i++){
+            Expense tempExp = Expense.get(i);
+            String sqlQuery = "INSERT INTO EXPENSE (expenseID,NAME,AMOUNT,DUEDATE,PAID) "
+                    + "VALUES ("+tempExp.getExpID()+",\'"+tempExp.getCategory()
+                    +"\',"+tempExp.getAmount()+",\'"+tempExp.getDueDate()
+                    +"\',\'"+tempExp.getPaid()+"\')";
+            sendDBCommand(sqlQuery);
+        }
+        for (int i=0;i<Supplier.size();i++){
+            Supplier tempSupp = Supplier.get(i);
+            String sqlQuery = "INSERT INTO SUPPLIER (supplierID,NAME,ADDRESS,PHONE) "
+                    + "VALUES ("+tempSupp.getSupplierID()+",\'"+tempSupp.getSupplierName()
+                    +"\',\'"+tempSupp.getSupplierAddress()+"\',"+tempSupp.getSupplierPhone()+")";
             sendDBCommand(sqlQuery);
         }
     }
@@ -1418,6 +1433,54 @@ ResultSet dbResults;
                 obsEmp.add(Employee.get(empArrayPos).getEmployeeName());
                 empArrayPos++;
             }
+            dbResults.close();
+        }
+        catch (SQLException sqle)
+        {
+            
+        }
+    }
+    public void loadSupplierDB() {
+        String sqlQuery = "SELECT * FROM SUPPLIER";
+        //sendDBCommand(sqlQuery);
+        String URL = "jdbc:oracle:thin:@localhost:1521:XE";
+        String userID = "javauser"; 
+        String userPASS = "javapass"; 
+        OracleDataSource ds;
+        Connection dbConn;
+        Statement cmmtStmt;
+        ResultSet dbResults = null;
+       
+        System.out.println(sqlQuery);
+        
+        try
+        {
+            dbConn = getDBConnection(URL,userID,userPASS);
+            cmmtStmt = dbConn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            dbResults = cmmtStmt.executeQuery(sqlQuery); 
+            
+        
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.toString());
+        }
+        
+        try
+        {
+            while (dbResults.next())
+            {
+                
+                int suppID = dbResults.getInt("supplierID");
+                String name = dbResults.getString("NAME");
+                String address = dbResults.getString("ADDRESS");
+                String phone = dbResults.getString("PHONE");
+                Supplier newSupplier = new Supplier(name,address,phone);
+                Supplier.add(newSupplier);
+                obsSupplier.add(Supplier.get(supArrayPos).getSupplierName());
+                supArrayPos++;
+                
+                }
             dbResults.close();
         }
         catch (SQLException sqle)
