@@ -876,9 +876,9 @@ ResultSet dbResults;
               
             Expense.add(newExpense);
             expTableData.add(newExpense);
-            editExpenseList.add(newExpense.toString());
+            editExpenseList.add(newExpense.getCategory());
                 
-           // obsExp.add(Expense.get(expArrayPos).toString());
+            obsExp.add(Expense.get(expArrayPos).toString());
             expArrayPos++;
         }
         cmboExpenseCategory.getSelectionModel().clearSelection();
@@ -1282,6 +1282,7 @@ ResultSet dbResults;
     });
     loadEmployeeDB();
     loadSupplierDB();
+    loadExpenseDB();
     }
 
     public static void main(String[] args) 
@@ -1479,6 +1480,60 @@ ResultSet dbResults;
                 Supplier.add(newSupplier);
                 obsSupplier.add(Supplier.get(supArrayPos).getSupplierName());
                 supArrayPos++;
+                
+                }
+            dbResults.close();
+        }
+        catch (SQLException sqle)
+        {
+            
+        }
+    }
+    public void loadExpenseDB() {
+        String sqlQuery = "SELECT * FROM EXPENSE";
+        //sendDBCommand(sqlQuery);
+        String URL = "jdbc:oracle:thin:@localhost:1521:XE";
+        String userID = "javauser"; 
+        String userPASS = "javapass"; 
+        OracleDataSource ds;
+        Connection dbConn;
+        Statement cmmtStmt;
+        ResultSet dbResults = null;
+       
+        System.out.println(sqlQuery);
+        
+        try
+        {
+            dbConn = getDBConnection(URL,userID,userPASS);
+            cmmtStmt = dbConn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            dbResults = cmmtStmt.executeQuery(sqlQuery); 
+            
+        
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.toString());
+        }
+        
+        try
+        {
+            while (dbResults.next())
+            {
+                
+                int expID = dbResults.getInt("expenseID");
+                String name = dbResults.getString("NAME");
+                double amount = dbResults.getDouble("AMOUNT");
+                String dueDate = dbResults.getString("DUEDATE");
+                String paid = dbResults.getString("PAID");
+                Expense newExpense = new Expense(name,amount,dueDate,paid);
+                Expense.add(newExpense);
+                expTableData.add(newExpense);
+                editExpenseList.add(newExpense.getCategory());
+
+                obsExp.add(Expense.get(expArrayPos).toString());
+                expArrayPos++;
+                tblExpenses.refresh();
+                tblExpenses.setItems(expTableData);
                 
                 }
             dbResults.close();
