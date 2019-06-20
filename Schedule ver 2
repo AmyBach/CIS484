@@ -1,0 +1,123 @@
+import java.util.ArrayList;
+
+
+
+public class Schedule 
+
+{
+
+    // Data Fields
+
+    //public static ArrayList<Employee> Employee = new ArrayList<Employee>();
+
+    public static ArrayList<Schedule> Shifts = new ArrayList<Schedule>();
+
+    public int shiftNumID;
+    
+    public String shiftDate;
+
+    public String shiftBegTime; 
+
+    public String shiftEndTime;
+    
+    public Employee shiftEmp;
+
+    
+
+    public static int nextShiftID = 0; 
+
+    
+
+    // Constructors
+
+    public Schedule(Employee emp, String date, String begHour, String endHour)
+
+    { 
+
+        this.shiftEmp = emp;
+        
+        this.shiftDate = date;
+        
+        this.shiftBegTime = begHour;
+
+        this.shiftEndTime = endHour; 
+
+        this.shiftNumID = nextShiftID++; 
+
+        
+
+    }
+
+    
+
+    // Member Methods
+
+    public int getShiftID()
+
+    {
+
+        return this.shiftNumID;
+
+    }
+
+    
+
+    public String getShiftTime()
+
+    {
+
+        return "Shift Time: " + this.shiftBegTime + " - " + this.shiftEndTime;
+
+    }
+    
+    public Employee getShiftEmp() 
+    {
+        return this.shiftEmp; 
+    }
+    
+    public String getDate()
+    {
+        return this.shiftDate;
+    }
+    
+    public String getShiftBegTime()
+    {
+        return this.shiftBegTime;
+    }
+
+    public String getShiftEndTime()
+    {
+        return this.shiftEndTime;
+    }
+    
+    public void setBegHour(String newBegHour)
+
+    {
+
+        this.shiftBegTime = newBegHour;
+
+    }
+
+    public void setEndHour(String newEndHour)
+
+    {
+
+        this.shiftEndTime = newEndHour;
+
+    }
+
+    @Override
+
+    public String toString()
+
+    {
+
+        return "Shift ID: " + this.getShiftID() + " Employee: " + this.shiftEmp.getEmployeeName() + " " +  this.getDate() + " " + this.getShiftTime();
+
+    }
+
+
+
+            
+
+}
