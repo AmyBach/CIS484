@@ -48,6 +48,7 @@ ResultSet dbResults;
     // Inventory Panes
     GridPane inventoryPane = new GridPane(); 
     GridPane addProductPane = new GridPane();
+    GridPane updateProdPane = new GridPane();
     
     // Expense Panes
     GridPane expensePane = new GridPane();
@@ -57,6 +58,7 @@ ResultSet dbResults;
     // Supplier Panes
     GridPane supplierPane = new GridPane();
     GridPane addSupplierPane = new GridPane();
+    GridPane updateSupplierPane = new GridPane();
 
     // Schedule Panes
     GridPane schedulePane = new GridPane();    
@@ -75,20 +77,29 @@ ResultSet dbResults;
     Button btnInventory = new Button("Inventory"); 
     Button btnSchedule = new Button("Schedule");
     Button btnSupplier = new Button("Supplier");
+    
     Button btnGenerate = new Button("Generate"); // Reports Page
+    
     Button btnAddSup = new Button("Add New Supplier"); // Supplier buttons
-    Button btnRemSup = new Button("Remove Supplier");
+    Button btnUpdateSup = new Button("Update Supplier");
     Button btnAddNewSup = new Button("Add New Supplier"); // Supplier Button
+    Button btnUpdateSup2 = new Button("Update Supplier");
+    
     Button btnChangeImage = new Button("Change Image"); // Inventory Buttons
     Button btnAddNewProd = new Button("Add New Product");
     Button btnUpdateEmp = new Button("Update Employee"); // Employee Buttons
     Button btnAddNewEmp = new Button("Add New Employee");
     Button btnAddEmp = new Button("Add Employee"); // Button to ADD NEW EMPLOYEE
+   
     Button btnPrint = new Button("Print Receipt"); // POS Page
     Button btnCreateCustAccount = new Button("Create Customer");
     Button btnNewCustAccount = new Button("Create Customer");
     Button btnAddEmpSch = new Button("Add to Schedule"); // Schedule Button
+    
+    //Product buttons
     Button btnAddProd = new Button("Add Product");
+    Button btnUpdateProd = new Button("Update Product");
+    
     Button btnAddExpense = new Button("Add Expense"); // Expense Buttons
     Button btnRemoveExpense = new Button("Remove Expense");
     Button btnAddNewExpense = new Button("Add New Expense");
@@ -96,11 +107,14 @@ ResultSet dbResults;
     Button btnUpdateEx = new Button("Update Expense");
     Button btnFilter = new Button("Filter");
     Button btnSaveChanges = new Button("Save Changes"); //update employee
+   
+    
     //Radio Buttons
     RadioButton rdbExpPaid = new RadioButton("Paid");
     RadioButton rdbExpUnpaid = new RadioButton("Unpaid");
     RadioButton rdbExpPaid2 = new RadioButton("Paid");
     RadioButton rdbExpUnpaid2 = new RadioButton("Unpaid");
+    
      // Create Toggle Group for update/remove employee
     ToggleGroup tGroup = new ToggleGroup();
     RadioButton rbUpdateEmp = new RadioButton("Update Employee");
@@ -112,6 +126,7 @@ ResultSet dbResults;
     Label lblRType = new Label("Report Type: ");
     Label lblSNum = new Label("Store #: ");
     Label lblWeek = new Label("Week: ");
+    
     Label lblExpense = new Label("Current Expenses: ");
     Label lblExpFilter = new Label("Filter by: ");
     Label lblSupplier = new Label("Select Supplier: ");
@@ -124,21 +139,30 @@ ResultSet dbResults;
     Label lblEmpAddress = new Label("Address:");
     Label lblEmpStatus = new Label("Employment Type:");
     Label lblEmpWage = new Label("Wage:");
-    Label lblDaySelection = new Label("Select Day: ");
-    Label lblStartTime = new Label("Select Start Time");
-    Label lblEndTime = new Label("Select End Time");
+    
+    Label lblDaySelection = new Label("Select Day: "); // Schedule Window
+    Label lblStartTime = new Label("Select Start Time:");
+    Label lblEndTime = new Label("Select End Time: ");
+    Label lblEmpSel = new Label("Select Employee: ");
+    
     Label lblCustName = new Label("Name: ");
     Label lblCustPhone = new Label("Phone: ");
     Label lblCustAddress = new Label("(Optional) Address: ");
     Label lblCustEmail = new Label("(Optional) Email: ");
+    
+    //label Product page
     Label lblProdName = new Label("Product Name: ");
     Label lblProdWeight = new Label("Product Weight: ");
-    Label lblProdPricePaid = new Label("Product Price: "); // Add Product Page
+    Label lblProdPricePaid = new Label("Price Paid: "); // Add Product Page
     Label lblProdSalePrice = new Label("Product Sale Price: ");
     Label lblProdDesc = new Label("Product Description: ");
-    Label lblSupplierName = new Label("Supplier: ");
+    Label lblSupplierName = new Label("Supplier that product was purchased from: ");
     Label lblProdImage = new Label("Image: ");
-    Label lblExpCat = new Label("Category: ");//Add Expense Page
+    Label lblProdQuantity = new Label("Quantity to put in inventory");
+    Label lblProdCate = new Label("Product Category");
+    
+    //Label Expense Page
+    Label lblExpCat = new Label("Category: ");
     Label lblExpAmount = new Label("Amount: ");
     Label lblExpDueDate = new Label("Due Date: ");
     Label lblExpPaid = new Label("Paid/Unpaid: ");
@@ -146,6 +170,7 @@ ResultSet dbResults;
     Label lblSupAddress = new Label("Supplier Address: ");
     Label lblSupPhone = new Label("Supplier Phone Number: "); 
     
+    //Update employee page
     Label lblEmpName1 = new Label("Name:"); // Updated Employee Name
     Label lblEmpPos1 = new Label("Position:"); // Updated Employee Position 
     Label lblEmpPhone1 = new Label("Phone:"); // Updated Employee Phone     
@@ -161,8 +186,11 @@ ResultSet dbResults;
     Label lblExpDueDate2 = new Label("Due Date: ");
     Label lblExpPaid2 = new Label("Paid/Unpaid: ");
     
- 
-    // TextFields
+    Label lblSupName2 = new Label("Supplier Name: ");// Update Supplier
+    Label lblSupAddress2 = new Label("Supplier Address: ");
+    Label lblSupPhone2 = new Label("Supplier Phone Number: "); 
+    
+ //// TEXT FIELDS
     TextField txtSupInfo = new TextField();
     TextField txtTotal = new TextField();
     TextField txtEmpName = new TextField("Enter first and last name"); // Add Employee Page
@@ -174,12 +202,19 @@ ResultSet dbResults;
     TextField txtCustPhone = new TextField();
     TextField txtCustAddress = new TextField();
     TextField txtCustEmail = new TextField();
+    
+//Product     
     TextField txtProdName = new TextField();
     TextField txtProdWeight = new TextField();
     TextField txtProdPricePaid = new TextField();
     TextField txtProdSalePrice = new TextField(); // Add Product Page
     TextField txtProdDesc = new TextField();
     TextField txtSupplierName = new TextField();
+    //newly added
+    TextField txtProdQuantity = new TextField();
+    TextField txtProdCate = new TextField();
+    
+    
     TextField txtExpAmount = new TextField("Please enter expense amount"); //to enter expense amount    
     TextField txtExpDueDate = new TextField("Please choose due date from calendar");   
     TextField txtSupName = new TextField();
@@ -195,6 +230,10 @@ ResultSet dbResults;
     
     TextField txtExpAmount2 = new TextField("Please enter expense amount"); //Updated Expense Labels    
     TextField txtExpDueDate2 = new TextField("Please choose due date from calendar");
+    
+    TextField txtSupName2 = new TextField(); // Updated Supplier
+    TextField txtSupAddress2 = new TextField();
+    TextField txtSupPhone2 = new TextField();
     
     // TextAreas
     TextArea taReports = new TextArea();
@@ -212,6 +251,7 @@ ResultSet dbResults;
     //ObservableList<Employee> tableData = FXCollections.observableArrayList();
     TableView tblPOS = new TableView<>();
     //ObservableList<Product> tableData = FXCollections.observableArrayList();
+    TableView tblSchedule = new TableView<>();
     
     // Observable Lists
     ObservableList<Employee> empTableData = FXCollections.observableArrayList(Employee);
@@ -225,8 +265,11 @@ ResultSet dbResults;
             "10:00 PM", "11:00 PM");
     ObservableList obsEmpSch = FXCollections.observableArrayList();    
     ObservableList obsEmp = FXCollections.observableArrayList();
+    
+    //Product 
     ObservableList<Product> prodTableData = FXCollections.observableArrayList(Product);
     ObservableList obsProduct = FXCollections.observableArrayList();
+   
     ObservableList obsSupplier = FXCollections.observableArrayList();    
     ObservableList<Expense> expTableData = FXCollections.observableArrayList(Expense);
     ObservableList obsExpFilter = FXCollections.observableArrayList();    
@@ -237,21 +280,34 @@ ResultSet dbResults;
     ObservableList obsExpenseCategory = FXCollections.observableArrayList("Mortgages", "Utilities", "Lawn Care",
                                                                           "Maintenance", "Insurance", "Cleaning", "Mechanics");
     ObservableList editExpenseList = FXCollections.observableArrayList(); 
+   
     ObservableList obsFilters = FXCollections.observableArrayList("Category", "Amount", "Due Date", "Paid");
-    // ComboBoxes
+    
+    ObservableList obsProdCate = FXCollections.observableArrayList("Meat/Dairy", "Canned", "Dry", "Sweet",
+                                                                    "Snacks", "Fruit/Veggie", "Beverage", "Pharmacy" );
+    ObservableList <Schedule> schTableData = FXCollections.observableArrayList(Shifts);
+    
+// ComboBoxes
     ComboBox cmboRType = new ComboBox(); // Reports Page
     ComboBox cmboSNum = new ComboBox();
     ComboBox cmboWeek = new ComboBox();
     ComboBox cmboExpFilter = new ComboBox(obsFilters); // Expense Button    
     ComboBox cmboExp = new ComboBox(editExpenseList);
-    ComboBox cmboSupplier = new ComboBox(obsSupplier); // Supplier Button
+    
+    
     ComboBox cmboInvItem = new ComboBox(); // Inventory Button
     ComboBox cmboEmp = new ComboBox(obsEmp); // Employee Button
     ComboBox cmboEmpStatus = new ComboBox(obsEmpStatus); // Employee Status(Part/Full Time)
-    ComboBox cmboEmpSch = new ComboBox(obsEmpSch);    
+    ComboBox cmboEmpSch = new ComboBox(obsEmp);    
     ComboBox cmboStartTime = new ComboBox(obsStartTime);
     ComboBox cmboEndTime = new ComboBox(obsEndTime);   
+    
+    //combo box for product window
     ComboBox cmboProdImage = new ComboBox(); // Product Images
+    ComboBox cmboSupplier = new ComboBox(obsSupplier); // Supplier Button
+    ComboBox cmboProdCate = new ComboBox(obsProdCate); //add list of product category to the combobox
+    ComboBox cmboProdList = new ComboBox(obsProduct);
+    ComboBox cmboSupOps = new ComboBox(obsSupplier);
     
     //Combo box for employee positions  
     ComboBox cmboEmpPosit = new ComboBox(obsEmpPosit);
@@ -268,12 +324,19 @@ ResultSet dbResults;
     Alert aEName = new Alert(Alert.AlertType.ERROR);
     Alert aEmpWage = new Alert(Alert.AlertType.ERROR);
     Alert aEmpPos = new Alert(Alert.AlertType.ERROR);
+    
     Alert addProdEmpty = new Alert(Alert.AlertType.ERROR);
+    Alert addSupEmpty = new Alert(Alert.AlertType.ERROR);
     
     //Alert for paid/unpaid radio button 
     Alert checkExpense = new Alert(Alert.AlertType.ERROR); 
     //alert for updating emp
     Alert aEditEmpEmpty = new Alert(Alert.AlertType.ERROR);
+    
+    //alert for adding new product
+    Alert aProdWeight = new Alert(Alert.AlertType.ERROR);
+    Alert aProdQuantity = new Alert(Alert.AlertType.ERROR);
+    
     // DatePicker
     DatePicker daySelection = new DatePicker();
     DatePicker dueDate = new DatePicker();
@@ -291,9 +354,7 @@ ResultSet dbResults;
     
     // CheckBox
     CheckBox chkThriftyClub = new CheckBox("Add to Thrifty Club?");
-    
-    
-    
+
     // Log in page
     Label lblUsername = new Label("Username: ");
     Label lblPassword = new Label("Password: ");
@@ -316,7 +377,11 @@ ResultSet dbResults;
         addProdEmpty.setHeaderText("Empty Field(s)!");
         addProdEmpty.setContentText("Please fill every field.");    
         checkExpense.setContentText("Please choose if expense is Paid or Unpaid!"); //message for paid/unpaid expense button
-        Alert addSupEmpty = new Alert(Alert.AlertType.ERROR);
+        
+        
+        //alert for adding new product
+        aProdWeight.setHeaderText("Product weight must be greater than 0");
+        aProdQuantity.setHeaderText("Please enter the quantity more than 0");
   
         //Toggle group for checking paid/unpaid expense; 
         //Adding each Radio Button to a ToggleGroup so that they are aware of each other.
@@ -408,12 +473,22 @@ ResultSet dbResults;
         tblSuppliers.getColumns().addAll(tblcSupProduct, tblcProdCat, tblcPrice);
         
         //Inventory Table
-        TableColumn tblcImage = new TableColumn("Image");
-        TableColumn tblcProduct = new TableColumn("Product");
-        TableColumn tblcStock = new TableColumn("# in Stock");
-        TableColumn tblcIncoming = new TableColumn("Amount Incoming");
-        TableColumn tblcDiscarded = new TableColumn("# Discarded");
-        tblInventory.getColumns().addAll(tblcImage, tblcProduct, tblcStock, tblcIncoming, tblcDiscarded);
+        
+//        TableColumn tblcImage = new TableColumn("Image");
+//        TableColumn tblcProduct = new TableColumn("Product");
+        
+        TableColumn tblcProdName = new TableColumn("Product");
+        TableColumn tblcProdCate = new TableColumn("Category");
+        TableColumn tblcProdSupp = new TableColumn("Supplier");
+        
+        TableColumn tblcStock = new TableColumn("InStock"); 
+        TableColumn tblcIncoming = new TableColumn("Incoming");
+        TableColumn tblcDiscarded = new TableColumn("Discarded");
+        
+        //tblInventory.getColumns().addAll(tblcImage, tblcProduct, tblcStock, tblcIncoming, tblcDiscarded);
+        
+        tblInventory.getColumns().addAll(tblcProdName, tblcProdCate, tblcProdSupp, tblcStock, tblcIncoming, tblcDiscarded);
+        
 
         //Employee Table
         TableColumn tblcEmpName = new TableColumn("Name");
@@ -432,7 +507,14 @@ ResultSet dbResults;
         TableColumn tblcApplied = new TableColumn("Applied");
         TableColumn tblcTotal = new TableColumn("Total");
         tblPOS.getColumns().addAll(tblcProdScan, tblcQuantity, tblcProdPrice, tblcDiscount, tblcApplied, tblcTotal);
-
+        
+         // Schedule Table
+        TableColumn tblcSchEmp = new TableColumn("Employee: ");
+        TableColumn tblcDate = new TableColumn("Date: ");
+        TableColumn tblcStart = new TableColumn("Start Time: ");
+        TableColumn tblcEnd = new TableColumn("End Time: ");
+        tblSchedule.getColumns().addAll(tblcSchEmp, tblcDate, tblcStart, tblcEnd);
+        
         // Setting Tab Pane
         primaryPane.add(tbPane, 0, 0);
         
@@ -446,7 +528,7 @@ ResultSet dbResults;
         tbPane.getTabs().add(tab3);
         
         Scene primaryScene = new Scene(primaryPane, 750, 500);
-        Scene loginScene = new Scene(loginPane, 300, 300);
+        Scene loginScene = new Scene(loginPane, 600, 600);
         primaryStage.setTitle("Thrifty Store");
         primaryStage.setScene(loginScene);
         primaryStage.show();
@@ -462,10 +544,12 @@ ResultSet dbResults;
         loginPane.add(btnLogin, 2, 2);
         
         btnLogin.setOnAction(e -> {
+            //if the user is manager and provide the right manager username and password - show all 
             if(txtUsername.getText().equals("manager") && txtPassword.getText().equals("manager"))
             {
                 primaryStage.setScene(primaryScene);
             }
+            //else if they did not provide all, will not show manage empployee and expense 
             else
             {
                 primaryStage.setScene(primaryScene);
@@ -530,7 +614,7 @@ ResultSet dbResults;
         addEmployeePane.add(cmboEmpStatus, 1, 4);
         addEmployeePane.add(txtEmpWage, 1, 5);
         addEmployeePane.add(btnAddEmp, 1, 7);
-        Scene addEmpScene = new Scene(addEmployeePane, 400, 300);
+        Scene addEmpScene = new Scene(addEmployeePane, 500, 400);
         Stage addEmpStage = new Stage();
         addEmpStage.setScene(addEmpScene);
         addEmpStage.setTitle("Add Employee");
@@ -741,8 +825,10 @@ ResultSet dbResults;
                 String tgValue = selectedRB.getText();
                 
                 if(rbRemoveEmp.isSelected()) {
-                    selectedEmployee.removeEmployee(selectedEmployee);
+                    //selectedEmployee.removeEmployee(selectedEmployee);
                     empTableData.remove(selectedEmployee);
+                    Employee.remove(selectedEmployee);
+                    DeleteEmployeeDB(selectedEmployee);
                 }
                 
                 if(rbUpdateEmp.isSelected()) {
@@ -796,7 +882,7 @@ ResultSet dbResults;
         tblEmployee.refresh();
         });
     
-    // Expenses Button
+// EXPENSE BUTTON
     btnExpenses.setOnAction(e -> {
         
         expensePane = new GridPane();
@@ -876,9 +962,9 @@ ResultSet dbResults;
               
             Expense.add(newExpense);
             expTableData.add(newExpense);
-            editExpenseList.add(newExpense.getCategory());
+            editExpenseList.add(newExpense.toString());
                 
-            obsExp.add(Expense.get(expArrayPos).toString());
+           // obsExp.add(Expense.get(expArrayPos).toString());
             expArrayPos++;
         }
         cmboExpenseCategory.getSelectionModel().clearSelection();
@@ -1007,17 +1093,25 @@ ResultSet dbResults;
     tblcDue.setCellValueFactory(new PropertyValueFactory<Expense,String>("dueDate"));
     tblcPaid.setCellValueFactory(new PropertyValueFactory<Expense,String>("paid"));
 
-    // Inventory Button
+    
+//// INVENTORY WINDOW 
+
     btnInventory.setOnAction(e -> {
     inventoryPane = new GridPane();
     inventoryPane.setHgap(20);
     inventoryPane.setVgap(20);
     inventoryPane.setAlignment(Pos.CENTER);
+    
     inventoryPane.add(lblInventory, 0, 0);
     inventoryPane.add(cmboInvItem, 0, 2);
     inventoryPane.add(btnChangeImage, 1, 2);
     inventoryPane.add(btnAddNewProd, 2, 2);
+    inventoryPane.add(btnUpdateProd, 2, 3);
+    
     inventoryPane.add(tblInventory, 0, 1, 3, 1);
+    
+    //inventoryPane.add(tblInventory, 0, 2, 3, 2);
+    
     Scene invScene = new Scene(inventoryPane, 600, 650);
     Stage invStage = new Stage();
     invStage.setScene(invScene);
@@ -1030,22 +1124,36 @@ ResultSet dbResults;
         addProductPane.setAlignment(Pos.CENTER);
         addProductPane.setVgap(10);
         addProductPane.setHgap(5);
+        
+        //add labels for products 
         addProductPane.add(lblProdName, 0, 0);
         addProductPane.add(lblProdWeight, 0, 1);
-        addProductPane.add(lblProdPricePaid, 0, 2);
-        addProductPane.add(lblProdSalePrice, 0, 3);
-        addProductPane.add(lblProdDesc, 0, 4);
-        addProductPane.add(lblSupplierName, 0, 5);
-        addProductPane.add(lblProdImage, 0, 6);
+        
+        addProductPane.add(lblProdCate, 0, 2);
+        
+        addProductPane.add(lblProdPricePaid, 0, 3);
+        addProductPane.add(lblProdSalePrice, 0, 4);
+        addProductPane.add(lblProdDesc, 0, 5);
+        addProductPane.add(lblSupplierName, 0, 6);
+        addProductPane.add(lblProdQuantity, 0, 7); //new
+        
+        
         addProductPane.add(txtProdName, 1, 0);
-        addProductPane.add(txtProdWeight, 1, 1);
-        addProductPane.add(txtProdPricePaid, 1, 2);
-        addProductPane.add(txtProdSalePrice, 1, 3);
-        addProductPane.add(txtProdDesc, 1, 4);
-        addProductPane.add(txtSupplierName, 1, 5); // Should be a ComboBox
-        addProductPane.add(cmboProdImage, 1, 6);
-        addProductPane.add(btnAddProd, 2, 7);
-        Scene addProdScene = new Scene(addProductPane, 500, 400);
+        addProductPane.add(txtProdWeight, 1, 1);    
+        addProductPane.add(cmboProdCate, 1, 2); //new cmbo Product category
+        addProductPane.add(txtProdPricePaid, 1, 3);
+        addProductPane.add(txtProdSalePrice, 1, 4); 
+        addProductPane.add(txtProdDesc, 1, 5);
+ 
+        addProductPane.add(cmboSupplier, 1, 6); //combo box for supplier to choose from
+        addProductPane.add(txtProdQuantity, 1,7); //new
+        
+        addProductPane.add(cmboProdImage, 1, 8);
+        addProductPane.add(lblProdImage, 0, 8);
+        
+        addProductPane.add(btnAddProd, 2, 8);
+        
+        Scene addProdScene = new Scene(addProductPane, 600, 600);
         Stage addProdStage = new Stage();
         addProdStage.setScene(addProdScene);
         addProdStage.setTitle("Add Product");
@@ -1053,62 +1161,334 @@ ResultSet dbResults;
     });
 
    btnAddProd.setOnAction(g -> {
+       
+       
         boolean eProdName = txtProdName.getText().trim().isEmpty();
         boolean eProdWeight = txtProdWeight.getText().trim().isEmpty();
+        boolean eProdCate = cmboProdCate.getSelectionModel().isEmpty();
+        
         boolean eProdPricePaid = txtProdPricePaid.getText().trim().isEmpty();
         boolean eProdSalePrice = txtProdSalePrice.getText().trim().isEmpty();
         boolean eProdDesc = txtProdDesc.getText().trim().isEmpty();
-        boolean eSupplierName = txtSupplierName.getText().trim().isEmpty();
-        if(eProdName || eProdWeight || eProdPricePaid || eProdSalePrice || eProdDesc || eSupplierName)
+        boolean eProdQuantity = txtProdQuantity.getText().trim().isEmpty();
+
+        boolean eSupplierName = cmboSupplier.getSelectionModel().isEmpty();
+        
+        //if(eProdName || eProdWeight || eProdPricePaid || eProdSalePrice || eProdDesc || eSupplierName || eProdQuantity)
+        
+        if(eProdName || eProdCate || eProdWeight || eProdPricePaid || eProdSalePrice || eProdDesc || eSupplierName  || eProdQuantity)    
         {
             addProdEmpty.showAndWait();
         }
         else
         {
             String prodName = txtProdName.getText();
+            String prodCate = (String)cmboProdCate.getSelectionModel().getSelectedItem(); //select category from list
             double prodWeight = Double.valueOf(txtProdWeight.getText());
             double prodPrice = Double.valueOf(txtProdPricePaid.getText());
             double prodSPrice = Double.valueOf(txtProdSalePrice.getText());
             String prodDesc = txtProdDesc.getText();
-            String prodSupp = txtSupplierName.getText();
-            Product.add(new Product(prodName, prodWeight, prodDesc, prodPrice, prodSPrice, prodSupp));
+            int prodQuantity = Integer.valueOf(txtProdQuantity.getText());
+  
+            int prodInt = cmboSupplier.getSelectionModel().getSelectedIndex(); //select supplier from list
+            Supplier prodSupp = Supplier.get(prodInt);
+            
+            String prodSuppName = prodSupp.getSupplierName();
+            
+            System.out.println(prodSuppName);//test out what it will print
+            
+            //add new product 
+            Product newProduct = new Product(prodName, prodCate, prodWeight, prodDesc, prodPrice, prodSPrice, prodSupp, prodQuantity);
+            
+            Product.add(newProduct);
+            
+            prodTableData.add(newProduct);
+
+            obsProduct.add(Product.get(prodArrayPos).getProductName());  
+            prodArrayPos++;
+            
+            System.out.println(newProduct.toString());
+            
             txtProdName.clear();
+            txtProdCate.clear();
+            
             txtProdWeight.clear();
             txtProdPricePaid.clear();
             txtProdSalePrice.clear();
             txtProdDesc.clear();
             txtSupplierName.clear();
-           for (Product pro: Product)
-           {
-                prodTableData.add(pro);
-           }
-            obsProduct.add(Product.get(prodArrayPos).getProductName());  
-            prodArrayPos++;
-        }
-    });
+            txtProdQuantity.clear();
 
-    tblInventory.setItems(prodTableData);
+        }
+        
+        
+   });
+   
+   tblInventory.setItems(prodTableData);
+   
     //add value to each column 
     //tblcImage.setCellValueFactory(new PropertyValueFactory<Employee,String>("EmployeeName"));
-    tblcProduct.setCellValueFactory(new PropertyValueFactory<Product,String>("ProductName")); 
+    tblcProdName.setCellValueFactory(new PropertyValueFactory<Product,String>("ProductName"));
+    tblcProdCate.setCellValueFactory(new PropertyValueFactory<Product,String>("ProductCategory"));
+    tblcProdSupp.setCellValueFactory(new PropertyValueFactory<Product,Supplier>("supplierName"));
+    
     tblcStock.setCellValueFactory(new PropertyValueFactory<Product,Integer>("ProductQuantity")); 
-    //tblcIncoming.setCellValueFactory(new PropertyValueFactory<Product,Integer>(""));
-    //tblcDiscarded.setCellValueFactory(new PropertyValueFactory<Product,Integer>(""));
-//TableColumn tblcImage = new TableColumn("Image");
+    
+    
+  //UPDATE PRODUCT
+    btnUpdateProd.setOnAction (m ->{
+      
+        
+        //create new update product pane
+        updateProdPane = new GridPane();
+        updateProdPane.setAlignment(Pos.CENTER);
+        updateProdPane.setHgap(20);
+        updateProdPane.setVgap(10);
+            
+        Label welcome = new Label("Please select an item from the dropdown"
+                + " menu below to edit!");
 
-//        TableColumn tblcProduct = new TableColumn("Product");
-//        TableColumn tblcStock = new TableColumn("# in Stock");
-//        TableColumn tblcIncoming = new TableColumn("Amount Incoming");
-//        TableColumn tblcDiscarded = new TableColumn("# Discarded");
+        Label instructions = new Label("Check all of the boxes of the fields you"
+                + " would like to edit");
+       
+        CheckBox updateProdName = new CheckBox("Product Name");
+        
+        
+        CheckBox updateProdWeight = new CheckBox("Item weight");
+        CheckBox updateProdCate = new CheckBox("Product Category");
+        
+        CheckBox updateProdPricePaid = new CheckBox("Price Paid for Product");
+        
+        CheckBox updateProdSalePrice = new CheckBox("Sale price");
+        
+        CheckBox updateProdDesc = new CheckBox("Item Description");
+        CheckBox updateProdQuan = new CheckBox("Number of items to add to inventory");
+        
+        Button btnEditProd = new Button("Submit Changes");
+        
+        updateProdPane.add(welcome, 0,0);
+      
+        updateProdPane.add(cmboProdList, 0,1 );
+        
+        updateProdPane.add(instructions,0,2);
+        
+        updateProdPane.add(updateProdName,0,3);
+        
+        updateProdPane.add(updateProdCate,0, 4);
+        
+        updateProdPane.add(updateProdWeight,0,5);
+        
+        updateProdPane.add(updateProdPricePaid,0,6);
+        
+        updateProdPane.add(updateProdSalePrice, 0, 7);
+        
+        updateProdPane.add(updateProdDesc, 0, 8);
+        
+ 
+        updateProdPane.add(updateProdQuan, 0, 9);
+             
+        updateProdPane.add(btnEditProd, 0, 19);
+        
+        
+        Scene updateProdScene = new Scene(updateProdPane, 1000, 700);
+        
+        Stage updateProdStage = new Stage();
+        
+        updateProdStage.setScene(updateProdScene);
+        updateProdStage.setTitle("Update Product Window");
+        updateProdStage.show();
+        
+        //select the product to update from the product list
+        
+        
+        btnEditProd.setOnAction(i->{
+            
+            //refresh the change and close the editing window
+            tblInventory.refresh();
+            updateProdStage.close();
+        });
+        
+        
+        
+//when select each button  
+
+    //update product name
+    
+        updateProdName.setOnAction(e ->{
+            
+           Label newProdName = new Label("Enter New Product Name");
+           TextField txtNewProdName = new TextField();
+           Button btnNewProdName = new Button("Update Name");
+           
+           updateProdPane.add(newProdName,0,10);
+           updateProdPane.add(txtNewProdName,1,10);
+           updateProdPane.add(btnNewProdName,2,10);
+
+           btnNewProdName.setOnAction(j ->{
+               int prodIndex = cmboProdList.getSelectionModel().getSelectedIndex();
+               Product selectedProd = Product.get(prodIndex);
+               String pName= txtNewProdName.getText();   
+               selectedProd.setProductName(pName);
+           });
+        });
+        
+     
+    //update product weight
+    updateProdWeight.setOnAction(e ->{
+            
+           Label newProdWeight = new Label("Enter New Product Weight (in lbs)");
+           TextField txtNewProdWeight = new TextField();
+           Button btnNewProdWeight = new Button("Update Weight");
+           
+           updateProdPane.add(newProdWeight,0,12);
+           updateProdPane.add(txtNewProdWeight,1,12);
+           updateProdPane.add(btnNewProdWeight,2,12);
+
+           btnNewProdWeight.setOnAction(j ->{
+               int prodIndex = cmboProdList.getSelectionModel().getSelectedIndex();
+               Product selectedProd = Product.get(prodIndex);
+               String pWeight= txtNewProdWeight.getText(); 
+               selectedProd.setProductName(pWeight);
+
+           });
+        });
+        
+    //update product category
+    updateProdCate.setOnAction(e ->{
+            
+           Label newProdCate = new Label("Choose new category");
+           //ComboBox cmboNewProdCate = new TextField();
+           Button btnNewProdCate = new Button("Update Category");
+           
+           updateProdPane.add(newProdCate,0,11);
+           updateProdPane.add(cmboProdCate, 1,11);
+           updateProdPane.add(btnNewProdCate,2,11);
+
+           btnNewProdCate.setOnAction(j ->{
+               int prodIndex = cmboProdList.getSelectionModel().getSelectedIndex();
+               Product selectedProd = Product.get(prodIndex);
+               String pNewCate = (String)cmboProdCate.getSelectionModel().getSelectedItem();
+               selectedProd.setProductCategory(pNewCate);
+
+           });
+        });    
+        
+  //update product paid price
+    updateProdPricePaid.setOnAction(e ->{
+            
+           Label newProdPP = new Label("Enter New Product Paid Price");
+           TextField txtNewProdPP = new TextField();
+           Button btnNewProdPP = new Button("Update Price Paid");
+           
+           updateProdPane.add(newProdPP,0,13);
+           updateProdPane.add(txtNewProdPP,1,13);
+           updateProdPane.add(btnNewProdPP,2,13);
+
+           btnNewProdPP.setOnAction(j ->{
+               int prodIndex = cmboProdList.getSelectionModel().getSelectedIndex();
+               Product selectedProd = Product.get(prodIndex);
+               double pPaidPrice = Double.parseDouble(txtNewProdPP.getText());   
+               selectedProd.setPricePaid(pPaidPrice);
+           });
+        });
+        
+    //update product sale price
+    updateProdSalePrice.setOnAction(e ->{
+            
+           Label newProdSP = new Label("Enter New Product Sale Price");
+           TextField txtNewProdSP = new TextField();
+           Button btnNewProdSP = new Button("Update Sale Price");
+           
+           updateProdPane.add(newProdSP,0,14);
+           updateProdPane.add(txtNewProdSP,1,14);
+           updateProdPane.add(btnNewProdSP,2,14);
+
+           btnNewProdSP.setOnAction(j ->{
+               int prodIndex = cmboProdList.getSelectionModel().getSelectedIndex();
+               Product selectedProd = Product.get(prodIndex);
+               double pSalePrice = Double.parseDouble(txtNewProdSP.getText());   
+               selectedProd.setPricePaid(pSalePrice);
+           });
+        });    
+    
+    
+    //update product sale price
+    updateProdDesc.setOnAction(e ->{
+            
+           Label newProdDesc = new Label("Enter New Product Description");
+           TextField txtNewProdDesc = new TextField();
+           Button btnNewProdDesc = new Button("Update Product Description");
+           
+           updateProdPane.add(newProdDesc,0,15);
+           updateProdPane.add(txtNewProdDesc,1,15);
+           updateProdPane.add(btnNewProdDesc,2,15);
+
+           btnNewProdDesc.setOnAction(j ->{
+               int prodIndex = cmboProdList.getSelectionModel().getSelectedIndex();
+               Product selectedProd = Product.get(prodIndex);
+               String pDesc = txtNewProdDesc.getText();   
+               selectedProd.setProductDescription(pDesc);
+           });
+        });        
+        
+    
+    //update product description
+    updateProdDesc.setOnAction(e ->{
+            
+           Label newProdDesc = new Label("Enter New Product Description");
+           TextField txtNewProdDesc = new TextField();
+           Button btnNewProdDesc = new Button("Update Product Description");
+           
+           updateProdPane.add(newProdDesc,0,16);
+           updateProdPane.add(txtNewProdDesc,1,16);
+           updateProdPane.add(btnNewProdDesc,2,16);
+
+           btnNewProdDesc.setOnAction(j ->{
+               int prodIndex = cmboProdList.getSelectionModel().getSelectedIndex();
+               Product selectedProd = Product.get(prodIndex);
+               String pDesc = txtNewProdDesc.getText();   
+               selectedProd.setProductDescription(pDesc);
+           });
+        });     
+        
+
+    //update product quantity
+    updateProdQuan.setOnAction(e ->{
+            
+           Label newProdQuan = new Label("Enter New Product Quantity");
+           TextField txtNewProdQuan = new TextField();
+           Button btnNewProdQuan = new Button("Update Product Quantity");
+           
+           updateProdPane.add(newProdQuan,0,17);
+           updateProdPane.add(txtNewProdQuan,1,17);
+           updateProdPane.add(btnNewProdQuan,2,17);
+
+           btnNewProdQuan.setOnAction(j ->{
+               int prodIndex = cmboProdList.getSelectionModel().getSelectedIndex();
+               Product selectedProd = Product.get(prodIndex);
+               int pQuan = Integer.parseInt(txtNewProdQuan.getText());   
+               selectedProd.setQuantity(pQuan);
+        });         
+        
+        
+    });
+    
+    
+    
+    
+        
+}); //end of update product window
+    
     // Supplier Button
     btnSupplier.setOnAction(e -> {
     supplierPane = new GridPane();
     supplierPane.setAlignment(Pos.CENTER);
     supplierPane.add(lblSupplier, 0, 0);
-    supplierPane.add(cmboSupplier, 1, 0);
-    supplierPane.add(txtSupInfo, 0, 1, 2, 1);
-    supplierPane.add(btnAddSup, 0, 3);
-    supplierPane.add(btnRemSup, 1, 3);
+    supplierPane.add(cmboSupplier, 0, 1);
+   // supplierPane.add(txtSupInfo, 0, 1, 2, 1);
+    supplierPane.add(cmboSupOps, 0, 3);
+    supplierPane.add(btnAddSup, 1, 4);
+    supplierPane.add(btnUpdateSup, 0, 4);
     supplierPane.add(tblSuppliers, 0, 2, 2, 1);
     supplierPane.setHgap(20);
     supplierPane.setVgap(20);
@@ -1165,10 +1545,7 @@ ResultSet dbResults;
             txtSupName.clear();
             txtSupAddress.clear();
             txtSupPhone.clear();
-//                for (Supplier sup: supplierList)
-//                {
-//                    supplierTableData.add(sup);
-//                }
+
         }
     });  //end of button AddNewSup
 
@@ -1177,44 +1554,126 @@ ResultSet dbResults;
 //        tblcSupName.setCellValueFactory(new PropertyValueFactory<Supplier,String>("supplierName"));
 //        tblcSupAddress.setCellValueFactory(new PropertyValueFactory<Supplier,String>("supplierAddress")); 
 //        tblcSupPhone.setCellValueFactory(new PropertyValueFactory<Supplier,String>("supplierPhone"));
+    btnUpdateSup.setOnAction(e -> {
+    
+    if(cmboSupOps.getSelectionModel().getSelectedIndex() >= 0)
+    {    
+       //Supplier label
+        updateSupplierPane = new GridPane();
+        updateSupplierPane.setHgap(10);
+        updateSupplierPane.setVgap(10);
+        updateSupplierPane.setAlignment(Pos.CENTER);
+        
+        updateSupplierPane.add(lblSupName2, 0, 0); 
+        updateSupplierPane.add(lblSupAddress2, 0, 1);
+        updateSupplierPane.add(lblSupPhone2, 0, 2);
+        updateSupplierPane.add(txtSupName2, 1, 0); // TextFields
+        updateSupplierPane.add(txtSupAddress2, 1, 1);
+        updateSupplierPane.add(txtSupPhone2, 1, 2);
+        updateSupplierPane.add(btnUpdateSup2, 1, 5);
+        
+        Scene updateSupplierScene = new Scene(updateSupplierPane, 400, 300);
+        Stage updateSupplierStage = new Stage();
+        updateSupplierStage.setScene(updateSupplierScene );
+        updateSupplierStage.setTitle("Update Expense");
+        updateSupplierStage.show();
+    }
+    else 
+    {
+        Alert supplierSelectEmpty = new Alert(Alert.AlertType.ERROR);
+        supplierSelectEmpty.setContentText("Please select an Supplier.");
+        supplierSelectEmpty.showAndWait();
+    } 
+    });
+    
+    btnUpdateSup2.setOnAction(e -> {
+        
+        int i = cmboSupOps.getSelectionModel().getSelectedIndex();
+        Supplier selectedSupplier = Supplier.get(i);
+
+        String getNewSupName = txtSupName2.getText();
+        selectedSupplier.setSupplierName(getNewSupName);
+        
+        String getNewSupAddress = txtSupAddress2.getText();
+        selectedSupplier.setSupplierAddress(getNewSupAddress);
+        
+        String getNewSupPhone = txtSupPhone2.getText();
+        selectedSupplier.setSupplierPhone(getNewSupPhone);
+        
+        obsSupplier.clear();
+        for(Supplier sup: Supplier)
+            {
+                obsSupplier.add(sup.getSupplierName());
+            }
+        
+        txtSupName2.clear();
+        txtSupAddress2.clear();
+        txtSupPhone2.clear();
+    
+    });
+
+
     btnSchedule.setOnAction(e -> {
     schedulePane = new GridPane();
-    schedulePane.add(lblDaySelection, 0, 0);
-    schedulePane.add(daySelection, 0, 1, 3, 1); 
-    schedulePane.add(lblStartTime, 0, 2);
-    schedulePane.add(cmboStartTime, 0, 3);
-    schedulePane.add(lblEndTime, 2, 2);
-    schedulePane.add(cmboEndTime, 2, 3);
-    schedulePane.add(cmboEmpSch, 1, 4);
-    schedulePane.add(btnAddEmpSch, 1, 5);
     schedulePane.setHgap(10);
-    schedulePane.setVgap(10);   
-    Scene scheduleScene = new Scene(schedulePane, 400, 400);
+    schedulePane.setVgap(10); 
+    schedulePane.setAlignment(Pos.CENTER);
+    
+    schedulePane.add(lblEmpSel, 0, 0);
+    schedulePane.add(cmboEmpSch, 1, 0);
+    schedulePane.add(lblDaySelection, 0, 1);
+    schedulePane.add(daySelection, 0, 2, 3, 1); 
+    schedulePane.add(lblStartTime, 0, 3);
+    schedulePane.add(cmboStartTime, 0, 4);
+    schedulePane.add(lblEndTime, 1, 3);
+    schedulePane.add(cmboEndTime, 1, 4);
+    schedulePane.add(btnAddEmpSch, 2, 4);
+    schedulePane.add(tblSchedule, 0, 5, 3, 1);
+    
+      
+    Scene scheduleScene = new Scene(schedulePane, 600, 600);
     Stage scheduleStage = new Stage();
     scheduleStage.setScene(scheduleScene);
     scheduleStage.setTitle("Thrifty Store Schedule");
     scheduleStage.show();
-        daySelection.setOnAction(b -> {
-            ds = daySelection.getValue();
+    daySelection.setOnAction(b -> {
+        ds = daySelection.getValue();
 
-        });
-        btnAddEmpSch.setOnAction(c -> {
-            if(cmboEmpSch.getSelectionModel().getSelectedIndex() >= 0 &&
-                    cmboStartTime.getSelectionModel().getSelectedIndex() >= 0 &&
-                    cmboEndTime.getSelectionModel().getSelectedIndex() >= 0 &&
-                    daySelection != null)
-            {
-                //Schedule.Employee.add(Employee.get(cmboEmpSch.getSelectionModel().getSelectedIndex()));
-                Shifts.add(new Schedule(Employee.get(cmboEmpSch.getSelectionModel().getSelectedIndex()),
-                String.valueOf(daySelection.getValue()),
-                String.valueOf(cmboStartTime.getSelectionModel().getSelectedItem()), 
-                String.valueOf(cmboEndTime.getSelectionModel().getSelectedItem())));
-            }
-            cmboStartTime.getSelectionModel().clearSelection();
-            cmboEndTime.getSelectionModel().clearSelection();
-            cmboEmpSch.getSelectionModel().clearSelection();
-        });
+    });   
     });
+    
+    btnAddEmpSch.setOnAction(c -> {
+        if(cmboEmpSch.getSelectionModel().getSelectedIndex() >= 0 &&
+                cmboStartTime.getSelectionModel().getSelectedIndex() >= 0 &&
+                cmboEndTime.getSelectionModel().getSelectedIndex() >= 0 &&
+                daySelection != null)
+        {
+            //Schedule.Employee.add(Employee.get(cmboEmpSch.getSelectionModel().getSelectedIndex()));
+            Employee shiftEmp = Employee.get(cmboEmpSch.getSelectionModel().getSelectedIndex());
+            String shiftDate = String.valueOf(daySelection.getValue());
+            String shiftBeg = String.valueOf(cmboStartTime.getSelectionModel().getSelectedItem());
+            String shiftEnd = String.valueOf(cmboEndTime.getSelectionModel().getSelectedItem());
+            
+            Schedule newShift = new Schedule(shiftEmp, shiftDate, shiftBeg, shiftEnd);
+            Shifts.add(newShift);
+            schTableData.add(newShift);
+
+
+        }
+        cmboStartTime.getSelectionModel().clearSelection();
+        cmboEndTime.getSelectionModel().clearSelection();
+        cmboEmpSch.getSelectionModel().clearSelection();
+
+        tblSchedule.setItems(schTableData);
+    });
+    
+   
+    
+    tblcSchEmp.setCellValueFactory(new PropertyValueFactory<Schedule,Employee>("ShiftEmp"));
+    tblcDate.setCellValueFactory(new PropertyValueFactory<Schedule,String>("Date"));
+    tblcStart.setCellValueFactory(new PropertyValueFactory<Schedule,String>("ShiftBegTime"));
+    tblcEnd.setCellValueFactory(new PropertyValueFactory<Schedule,String>("ShiftEndTime"));
+    
     
     btnCreateCustAccount.setOnAction(e -> {
         custAcctPane = new GridPane();    
@@ -1280,15 +1739,20 @@ ResultSet dbResults;
 
         });
     });
+    
     loadEmployeeDB();
     loadSupplierDB();
     loadExpenseDB();
+    loadCustomerDB();
+     
     }
 
+    
     public static void main(String[] args) 
     {
         launch(args);
     }
+    
     @Override
     public void stop() {
         for (int i=0; i<Customer.size();i++){
@@ -1371,7 +1835,6 @@ ResultSet dbResults;
                 Boolean member = dbResults.getBoolean("MEMBER");
                 Customer newCustomer = new Customer(name,phone,address,email,member);
                 
-                //Customer newCustomer = new Customer(name,phone,address);
                 Customer.add(newCustomer);
             }
             dbResults.close();
@@ -1426,7 +1889,7 @@ ResultSet dbResults;
                 double wage = dbResults.getDouble("WAGE");
                 //String user = dbResults.getString("USERNAME");
                 //String pass = dbResults.getString("PASSWORD");
-                Employee newEmployee = new Employee(name,position,phone,address,status,wage);
+                Employee newEmployee = new Employee(empID,name,position,phone,address,status,wage);
                 
                 //Customer newCustomer = new Customer(name,phone,address);
                 Employee.add(newEmployee);
@@ -1489,6 +1952,8 @@ ResultSet dbResults;
             
         }
     }
+    
+    //newly added
     public void loadExpenseDB() {
         String sqlQuery = "SELECT * FROM EXPENSE";
         //sendDBCommand(sqlQuery);
@@ -1542,6 +2007,59 @@ ResultSet dbResults;
         {
             
         }
+    }
+    public void loadProductDB() {
+        String sqlQuery = "SELECT * FROM PRODUCT";
+        //sendDBCommand(sqlQuery);
+        String URL = "jdbc:oracle:thin:@localhost:1521:XE";
+        String userID = "javauser"; 
+        String userPASS = "javapass"; 
+        OracleDataSource ds;
+        Connection dbConn;
+        Statement cmmtStmt;
+        ResultSet dbResults = null;
+       
+        System.out.println(sqlQuery);
+        
+        try
+        {
+            dbConn = getDBConnection(URL,userID,userPASS);
+            cmmtStmt = dbConn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            dbResults = cmmtStmt.executeQuery(sqlQuery); 
+            
+        
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e.toString());
+        }
+        
+        
+        try
+        {
+            while (dbResults.next())
+            {
+                
+                int prodID = dbResults.getInt("productID");
+                String name = dbResults.getString("NAME");
+                String price = dbResults.getString("PRICE");
+                String category = dbResults.getString("CATEGORY");
+                int quantity = dbResults.getInt("QUANTITY");
+                String description = dbResults.getString("DESCRIPTION");
+                //Product newProduct = new Product(name,price,category,quantity,description);
+                
+                //Product.add(newProduct);
+            }
+            dbResults.close();
+        }
+        catch (SQLException sqle)
+        {
+            
+        }
+    }
+    public void DeleteEmployeeDB(Employee selectedEmp){
+        String sqlQuery = "DELETE FROM EMPLOYEE WHERE employeeID = "+selectedEmp.getEmployeeID()+"";
+        sendDBCommand(sqlQuery);
     }
     
     public void sendDBCommand(String sqlQuery)
