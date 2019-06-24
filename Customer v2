@@ -39,6 +39,14 @@ public class Customer {
         this.custID = nextID++;
 
     }
+    public Customer(int ID,String name, String phone, String address, String email, boolean status){
+        this.custID = ID;
+        this.customerName = name;
+        this.customerPhone = phone;
+        this.customerAddress = address;
+        this.customerEmail = email;
+        this.clubMember = status;
+    }
     
     
 
@@ -168,7 +176,7 @@ public class Customer {
 
     {
 
-        return customerAddress;
+        return customerPhone;
 
     }
 
@@ -225,5 +233,4 @@ public class Customer {
                 this.customerName + ", Member: " + this.getClubStatus();
 
     }
-    
 }
