@@ -56,7 +56,7 @@ Create table Expense
 (expenseID Integer Primary Key,
 Name VarChar(30),
 Amount Number(6,2),
-DueDate VarChar(11)
+DueDate VarChar(11),
 Paid VarChar(15));
 
 Create table Payroll
