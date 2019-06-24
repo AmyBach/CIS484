@@ -46,9 +46,11 @@ Name VarChar(30));
 
 Create table TimeShift
 (shiftNumID Integer Primary Key,
+employeeID Integer,
 begTime Integer,
 endTime Integer,
-TSDate VarChar(11));
+TSDate VarChar(11),
+Foreign Key(employeeID) REFERENCES Employee);
 
 Create table Expense
 (expenseID Integer Primary Key,
@@ -77,6 +79,7 @@ Description VarChar(50),
 SODate VarChar(11),
 Quantity Integer,
 Shipping VarChar(20),
+Price Number(6,2),
 Primary Key (supplierID,productID),
 Foreign Key (supplierID) REFERENCES Supplier,
 Foreign Key (productID) REFERENCES Product);
