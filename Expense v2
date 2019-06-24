@@ -18,6 +18,13 @@ public class Expense {
         this.paid = paid;
         this.expID = nextID++;
     }
+    public Expense(int ID, String cat, double amount, String date, String paid){
+        this.expID = ID;
+        this.category = cat;
+        this.amount = amount;
+        this.dueDate = date;
+        this.paid = paid;
+    }
     
     // Getters
     public String getCategory()
@@ -67,4 +74,3 @@ public class Expense {
     }
             
 }
- 
