@@ -17,7 +17,7 @@ import java.sql.*;
 import oracle.jdbc.pool.*;
 
 
-public class TestGUI extends Application { 
+public class GPApp extends Application { 
 
 
  public static ArrayList<Employee> Employee = new ArrayList<Employee>();
@@ -925,9 +925,10 @@ ResultSet dbResults;
                 String tgValue = selectedRB.getText();
 
                 if(rbRemoveEmp.isSelected()) {
-                    selectedEmployee.removeEmployee(selectedEmployee);
+                    //selectedEmployee.removeEmployee(selectedEmployee);
                     empTableData.remove(selectedEmployee);
-                    Employee.remove(empIDNum);
+                    Employee.remove(selectedEmployee);
+                    DeleteEmployeeDB(selectedEmployee);
                     
                 }                
 
@@ -2145,8 +2146,8 @@ ResultSet dbResults;
         String sqlQuery = "SELECT * FROM CUSTOMER";
         //sendDBCommand(sqlQuery);
         String URL = "jdbc:oracle:thin:@localhost:1521:XE";
-        String userID = "system"; 
-        String userPASS = "Reed12161993"; 
+        String userID = "javauser"; 
+        String userPASS = "javapass"; 
         OracleDataSource ds;
         Connection dbConn;
         Statement cmmtStmt;
@@ -2197,8 +2198,8 @@ ResultSet dbResults;
         String sqlQuery = "SELECT * FROM EMPLOYEE";
         //sendDBCommand(sqlQuery);
         String URL = "jdbc:oracle:thin:@localhost:1521:XE";
-        String userID = "system"; 
-        String userPASS = "Reed12161993"; 
+        String userID = "javauser"; 
+        String userPASS = "javapass"; 
         OracleDataSource ds;
         Connection dbConn;
         Statement cmmtStmt;
@@ -2260,8 +2261,8 @@ ResultSet dbResults;
         String sqlQuery = "SELECT * FROM SUPPLIER";
         //sendDBCommand(sqlQuery);
         String URL = "jdbc:oracle:thin:@localhost:1521:XE";
-        String userID = "system"; 
-        String userPASS = "Reed12161993"; 
+        String userID = "javauser"; 
+        String userPASS = "javapass"; 
         OracleDataSource ds;
         Connection dbConn;
         Statement cmmtStmt;
@@ -2308,8 +2309,8 @@ ResultSet dbResults;
         String sqlQuery = "SELECT * FROM EXPENSE";
         //sendDBCommand(sqlQuery);
         String URL = "jdbc:oracle:thin:@localhost:1521:XE";
-        String userID = "system"; 
-        String userPASS = "Reed12161993"; 
+        String userID = "javauser"; 
+        String userPASS = "javapass"; 
         OracleDataSource ds;
         Connection dbConn;
         Statement cmmtStmt;
@@ -2369,8 +2370,8 @@ ResultSet dbResults;
         String sqlQuery = "SELECT * FROM PRODUCT";
         //sendDBCommand(sqlQuery);
         String URL = "jdbc:oracle:thin:@localhost:1521:XE";
-        String userID = "system"; 
-        String userPASS = "Reed12161993"; 
+        String userID = "javauser"; 
+        String userPASS = "javapass"; 
         OracleDataSource ds;
         Connection dbConn;
         Statement cmmtStmt;
@@ -2422,8 +2423,8 @@ ResultSet dbResults;
 
     {
         String URL = "jdbc:oracle:thin:@localhost:1521:XE";
-        String userID = "system"; 
-        String userPASS = "Reed12161993"; 
+        String userID = "javauser"; 
+        String userPASS = "javapass"; 
         OracleDataSource ds;
         Connection dbConn;
         Statement cmmtStmt;
