@@ -42,6 +42,7 @@ public class Supplier {
         this.supplierName = supplierName;
         this.supplierAddress = supplierAddress;
         this.supplierPhone = supplierPhone;
+        nextID++;
     }
 
     
