@@ -27,13 +27,14 @@ public class Employee
      this.employeeID = nextEmpID++;
    }
    public Employee(int ID,String Name, String Position, String Phone, String Address, int Status, double Wage){
-       this.employeeID = ID;
        this.employeeName = Name;
     this.employeePosition = Position; 
     this.employeePhone = Phone; 
     this.employeeAddress = Address;
     this.employeeStatus = setEmpStatus(Status);
     this.employeeWage = Wage;
+    this.employeeID = ID;
+    nextEmpID++;
    }
    
    // Member Methods
