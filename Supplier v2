@@ -1,6 +1,9 @@
 public class Supplier {
-
 // Variables 
+
+    //public int supplierID;
+
+    
 
     public String supplierName;
 
@@ -8,18 +11,23 @@ public class Supplier {
 
     public String supplierPhone;
 
+    
+
     private int supplierID;
-    
     private static int nextID = 0;
+
     
-    //newly added the ID class
-    public ID newsupplierID;
+
+    
 
     //Constructor
 
     public Supplier(String supplierName, String supplierAddress, String supplierPhone)
 
     {
+
+        
+
         this.supplierName = supplierName;
 
         this.supplierAddress = supplierAddress;
@@ -27,13 +35,39 @@ public class Supplier {
         this.supplierPhone = supplierPhone;
 
         this.supplierID = nextID++;
-        
+
+    }
+    public Supplier(int ID, String supplierName, String supplierAddress, String supplierPhone){
+        this.supplierID = ID;
+        this.supplierName = supplierName;
+        this.supplierAddress = supplierAddress;
+        this.supplierPhone = supplierPhone;
     }
 
-
-// Getters/Setters
+    
 
     
+
+//    // Getters/Setters
+
+//    public int getSupplierID()
+
+//    {
+
+//        return supplierID;
+
+//    }
+
+//    public void setSupplierID(int supplierID)
+
+//    {
+
+//        this.supplierID = supplierID;
+
+//    }
+
+    
+
     public String getSupplierName()
 
     {
@@ -93,14 +127,6 @@ public class Supplier {
     public int getSupplierID() {
 
         return this.supplierID;
-        
-    }
-
-    
-    //new added to get supplierID from ID class
-    public int getNewSupplierID() {
-
-        return newsupplierID.getIdNumber();
 
     }
 
