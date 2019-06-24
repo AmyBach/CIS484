@@ -46,6 +46,7 @@ public class Customer {
         this.customerAddress = address;
         this.customerEmail = email;
         this.clubMember = status;
+        nextID++;
     }
     
     
