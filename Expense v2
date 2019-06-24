@@ -24,6 +24,7 @@ public class Expense {
         this.amount = amount;
         this.dueDate = date;
         this.paid = paid;
+        nextEmpID++;
     }
     
     // Getters
