@@ -92,12 +92,17 @@ Primary Key (productID,custOrderID),
 Foreign Key (productID) REFERENCES Product,
 Foreign Key (custOrderID) REFERENCES CustomerOrder);
 
-Insert into Employee (employeeID,Name,Position,Address,Phone,Type,Wage) 
-Values (0,'Zach Wagner','Manager','757 Chim Cir',5405323217,'Full-Time',35.5);
-Insert into Employee (employeeID,Name,Position,Address,Phone,Type,Wage) 
-Values (1,'Tyler Davis','Manager','18 Slim Rd',5408681229,'Full-Time',33.0);
+INSERT INTO EMPLOYEE (employeeID,NAME,POSITION,ADDRESS,PHONE,TYPE,WAGE) VALUES (0,'Zach Wagner','Manager','10 Tree Lane',5405324567,'Full-Time',35.0);
+INSERT INTO EMPLOYEE (employeeID,NAME,POSITION,ADDRESS,PHONE,TYPE,WAGE) VALUES (1,'Tyler Davis','Cashier','50 Hill Rd',5409858495,'Part-Time',15.0);
+INSERT INTO EMPLOYEE (employeeID,NAME,POSITION,ADDRESS,PHONE,TYPE,WAGE) VALUES (2,'Zach Beatty','Inventory Staff','40 Plant Dr',5409893849,'Full-Time',15.0);
+INSERT INTO EMPLOYEE (employeeID,NAME,POSITION,ADDRESS,PHONE,TYPE,WAGE) VALUES (3,'Amy Bach','Manager','75 Garden Ln',5403948598,'Full-Time',30.0);
+INSERT INTO EMPLOYEE (employeeID,NAME,POSITION,ADDRESS,PHONE,TYPE,WAGE) VALUES (4,'Robyn Malazarte','Cashier','50 Flower Cir',5409878938,'Full-Time',18.0);
+INSERT INTO EMPLOYEE (employeeID,NAME,POSITION,ADDRESS,PHONE,TYPE,WAGE) VALUES (5,'Ethan Arrington','Custodian','43 River Ct',5409837489,'Full-Time',15.0);
 
-INSERT INTO SUPPLIER (supplierID,NAME,ADDRESS,PHONE) 
-VALUES (0,'Walmart','767 Wally Dr',5493893849);
+INSERT INTO SUPPLIER (supplierID,NAME,ADDRESS,PHONE) VALUES (0,'Kraft','47 Krafty Rd',5489384958);
+INSERT INTO SUPPLIER (supplierID,NAME,ADDRESS,PHONE) VALUES (1,'Cambells','98 Soupy Ln',5847384958);
+INSERT INTO SUPPLIER (supplierID,NAME,ADDRESS,PHONE) VALUES (2,'General Mills','90 Milly Dr',3748578498);
+INSERT INTO SUPPLIER (supplierID,NAME,ADDRESS,PHONE) VALUES (3,'Coca-Cola','32 Cola Rd',2345849589);
+INSERT INTO SUPPLIER (supplierID,NAME,ADDRESS,PHONE) VALUES (4,'Farmer Joe','43 Farm Ct',5489584938);
 
 commit work;
