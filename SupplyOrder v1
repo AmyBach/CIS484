@@ -1,0 +1,47 @@
+public class SupplyOrder{
+    public String orderDate;
+    public int quantity;
+    public String shipping;
+    public double price;
+    public int supplierID;
+    public int productID;
+    
+    public SupplyOrder(String orderDate,int quantity,String shipping,double price){
+        this.orderDate = orderDate;
+        this.quantity = quantity;
+        this.shipping = shipping;
+        this.price = price;
+    }
+    public SupplyOrder(int supplierID,int productID,String orderDate,int quantity,String shipping,double price){
+        this.supplierID = supplierID;
+        this.productID = productID;
+        this.orderDate = orderDate;
+        this.quantity = quantity;
+        this.shipping = shipping;
+        this.price = price;
+    }
+    public String getOrderDate(){
+        return this.orderDate;
+    }
+    public void setOrderDate(String orderDate){
+        this.orderDate=orderDate;
+    }
+    public int getQuantity(){
+        return this.quantity;
+    }
+    public void setQuantity(int quantity){
+        this.quantity=quantity;
+    }
+    public String getShipping(){
+        return this.shipping;
+    }
+    public void setShipping(String shipping){
+        this.shipping=shipping;
+    }
+    public double getPrice(){
+        return this.price;
+    }
+    public void setPrice(double price){
+        this.price=price;
+    }
+}
