@@ -15,7 +15,8 @@ Name VarChar(30),
 Price Number(6,2),
 Category VarChar(25),
 Quantity Integer,
-Description VarChar(70));
+Description VarChar(70),
+Weight Number(6,2));
 
 Create table Supplier
 (supplierID Integer Primary Key,
@@ -56,7 +57,7 @@ Create table Expense
 (expenseID Integer Primary Key,
 Name VarChar(30),
 Amount Number(6,2),
-DueDate VarChar(11),
+DueDate VarChar(11)
 Paid VarChar(15));
 
 Create table Payroll
@@ -75,9 +76,7 @@ Foreign Key (customerID) REFERENCES Customer);
 Create table SupplyOrder
 (supplierID Integer,
 productID Integer,
-SODate VarChar(11),
 Quantity Integer,
-Shipping VarChar(20),
 Price Number(6,2),
 Primary Key (supplierID,productID),
 Foreign Key (supplierID) REFERENCES Supplier,
@@ -103,5 +102,11 @@ INSERT INTO SUPPLIER (supplierID,NAME,ADDRESS,PHONE) VALUES (1,'Cambells','98 So
 INSERT INTO SUPPLIER (supplierID,NAME,ADDRESS,PHONE) VALUES (2,'General Mills','90 Milly Dr',3748578498);
 INSERT INTO SUPPLIER (supplierID,NAME,ADDRESS,PHONE) VALUES (3,'Coca-Cola','32 Cola Rd',2345849589);
 INSERT INTO SUPPLIER (supplierID,NAME,ADDRESS,PHONE) VALUES (4,'Farmer Joe','43 Farm Ct',5489584938);
+
+INSERT INTO PRODUCT (productID,NAME,PRICE,CATEGORY,QUANTITY,DESCRIPTION,WEIGHT) VALUES (0,'Rice',2.0,'Dry',10,'Rice in bag',5.0);
+INSERT INTO PRODUCT (productID,NAME,PRICE,CATEGORY,QUANTITY,DESCRIPTION,WEIGHT) VALUES (1,'Carrots',5.0,'Fruit/Veeggie',10,'Carrots in a Bag',3.0);
+
+INSERT INTO SUPPLYORDER (productID,supplierID,QUANTITY,PRICE) VALUES (0,2,10,1.0);
+INSERT INTO SUPPLYORDER (productID,supplierID,QUANTITY,PRICE) VALUES (1,2,10,3.0);
 
 commit work;
