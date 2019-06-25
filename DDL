@@ -75,7 +75,6 @@ Foreign Key (customerID) REFERENCES Customer);
 Create table SupplyOrder
 (supplierID Integer,
 productID Integer,
-Description VarChar(50),
 SODate VarChar(11),
 Quantity Integer,
 Shipping VarChar(20),
