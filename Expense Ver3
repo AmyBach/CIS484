@@ -1,0 +1,85 @@
+import java.util.ArrayList;
+
+public class Expense {
+    
+    // Data Fields
+    public String category;
+    public double amount;
+    public String dueDate;
+    public String paid;
+    
+    private int expID;
+    private static int nextID = 0;
+    
+    // Constructor
+    public Expense(String cat, double amount, String date, String paid)
+    {
+        this.category = cat;
+        this.amount = amount;
+        this.dueDate = date;
+        this.paid = paid;
+        this.expID = nextID++;
+    }
+    public Expense(int ID, String cat, double amount, String date, String paid){
+        this.expID = ID;
+        this.category = cat;
+        this.amount = amount;
+        this.dueDate = date;
+        this.paid = paid;
+        nextID++;
+    }
+    // Getters
+    public String getCategory()
+    {
+        return this.category;
+    }
+    
+    public double getAmount()
+    {
+        return this.amount;
+    }
+    
+    public String getDueDate()
+    {
+        return this.dueDate;        
+    }
+    
+    public String getPaid()
+    {
+        return this.paid;
+    }
+    
+    public int getExpID()
+    {
+        return this.expID;
+    }
+   
+               
+    // Setters
+    public void setCategory(String cat)
+    {
+        this.category = cat;
+    }
+    
+    public void setAmount(double amount)
+    {
+        this.amount = amount;
+    }
+    
+    public void setDueDate(String date)
+    {
+        this.dueDate = date;
+    }
+    
+    public void setPaid(String paid)
+    {
+        this.paid = paid;
+    }
+            
+    
+    @Override
+    public String toString()
+    {
+        return "Category: " + this.category + " Due Date: " + this.getDueDate() + " Amount: $" + this.amount ;
+    }
+}
