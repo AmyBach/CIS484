@@ -49,6 +49,8 @@ public class Product {
         this.pricePaid = pricePaid;
 
         this.salePrice = salePrice;
+	
+	this.discountSalePrice = salePrice - (salePrice * .15);
 
         this.productDescription = productDescription; 
 
@@ -77,6 +79,8 @@ public class Product {
         this.pricePaid = pricePaid;
 
         this.salePrice = salePrice;
+	
+	this.discountSalePrice = salePrice - (salePrice * .15);
 
         this.productDescription = productDescription; 
 
@@ -86,62 +90,6 @@ public class Product {
         
         countItem += productQuantityCount;
         nextProductID++;
-
-    }
-    
-    
-    
-    public Product(String productName, String productCate, double weight, String productDescription, double discountSalePrice,
-
-
-
-        double pricePaid, double salePrice, Supplier supplierName, int productQuantityCount)
-
-
-
-    {
-
-        this.productName = productName;
-
-        
-
-        this.productCategory = productCate;
-
-
-
-        this.productWeight = weight;
-
-
-
-        this.pricePaid = pricePaid;
-
-
-
-        this.salePrice = salePrice;
-        
-        
-        this.discountSalePrice = salePrice - (salePrice * .15);
-
-
-        this.productDescription = productDescription; 
-
-
-
-        this.supplierName = supplierName;
-
-
-
-        this.productID = productID;
-
-        
-
-        this.productQuantityCount = productQuantityCount;
-
-        
-
-        countItem += productQuantityCount;
-
-
 
     }
 
