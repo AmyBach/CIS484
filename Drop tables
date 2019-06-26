@@ -1,0 +1,12 @@
+drop table customer;
+drop table product;
+drop table supplier;
+drop table store;
+drop table employee;
+drop table department;
+drop table timeshift;
+drop table expense;
+drop table payroll;
+drop table customerorder;
+drop table supplyorder;
+drop table productorder;
