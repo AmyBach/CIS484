@@ -36,7 +36,7 @@ Name VarChar(30),
 Position VarChar(25),
 Address VarChar(50),
 Phone Integer,
-Type VarChar(30),
+Type VarChar(15),
 Wage Number(6,2),
 Username VarChar(30),
 Password VarChar(30));
@@ -90,11 +90,22 @@ Primary Key (productID,custOrderID),
 Foreign Key (productID) REFERENCES Product,
 Foreign Key (custOrderID) REFERENCES CustomerOrder);
 
+INSERT INTO CUSTOMER (customerID,NAME,ADDRESS,PHONE,EMAIL,MEMBER) VALUES (0,'Jerry Rice','56 Receiver Ln',5409857483,'ricej@gmail.com','True');
+INSERT INTO CUSTOMER (customerID,NAME,ADDRESS,PHONE,EMAIL,MEMBER) VALUES (1,'Randy Moss','89 Pats Dr',4758493849,'mossr@gmail.com','False');
+INSERT INTO CUSTOMER (customerID,NAME,ADDRESS,PHONE,EMAIL,MEMBER) VALUES (2,'Alex Morgan','4 Score Rd',4783948573,'morgana@gmail.com','True');
+INSERT INTO CUSTOMER (customerID,NAME,ADDRESS,PHONE,EMAIL,MEMBER) VALUES (3,'Aaron Rodgers','12 Pack Ct',5989304958,'rodgersa@gmail.com','False');
+INSERT INTO CUSTOMER (customerID,NAME,ADDRESS,PHONE,EMAIL,MEMBER) VALUES (4,'Serena Williams','80 Racket Rd',2890957385,'williamss@gmail.com','True');
+
 INSERT INTO EMPLOYEE (employeeID,NAME,POSITION,ADDRESS,PHONE,TYPE,WAGE,USERNAME,PASSWORD) VALUES (0,'Zach Wagner','Manager','10 Tree Lane',5405324567,'Full-Time',35.0,'wagnerz','password');
+
 INSERT INTO EMPLOYEE (employeeID,NAME,POSITION,ADDRESS,PHONE,TYPE,WAGE,USERNAME,PASSWORD) VALUES (1,'Tyler Davis','Cashier','50 Hill Rd',5409858495,'Part-Time',15.0,'davist','password');
+
 INSERT INTO EMPLOYEE (employeeID,NAME,POSITION,ADDRESS,PHONE,TYPE,WAGE,USERNAME,PASSWORD) VALUES (2,'Zach Beatty','Inventory Staff','40 Plant Dr',5409893849,'Full-Time',15.0,'beattyz','password');
+
 INSERT INTO EMPLOYEE (employeeID,NAME,POSITION,ADDRESS,PHONE,TYPE,WAGE,USERNAME,PASSWORD) VALUES (3,'Amy Bach','Manager','75 Garden Ln',5403948598,'Full-Time',30.0,'bacha','password');
+
 INSERT INTO EMPLOYEE (employeeID,NAME,POSITION,ADDRESS,PHONE,TYPE,WAGE,USERNAME,PASSWORD) VALUES (4,'Robyn Malazarte','Cashier','50 Flower Cir',5409878938,'Full-Time',18.0,'malazarter','password');
+
 INSERT INTO EMPLOYEE (employeeID,NAME,POSITION,ADDRESS,PHONE,TYPE,WAGE,USERNAME,PASSWORD) VALUES (5,'Ethan Arrington','Custodian','43 River Ct',5409837489,'Full-Time',15.0,'arringtone','password');
 
 INSERT INTO SUPPLIER (supplierID,NAME,ADDRESS,PHONE) VALUES (0,'Kraft','47 Krafty Rd',5489384958);
@@ -108,5 +119,9 @@ INSERT INTO PRODUCT (productID,NAME,PRICE,CATEGORY,QUANTITY,DESCRIPTION,WEIGHT) 
 
 INSERT INTO SUPPLYORDER (productID,supplierID,QUANTITY,PRICE) VALUES (0,2,10,1.0);
 INSERT INTO SUPPLYORDER (productID,supplierID,QUANTITY,PRICE) VALUES (1,2,10,3.0);
+
+INSERT INTO EXPENSE (expenseID,NAME,AMOUNT,DUEDATE,PAID) VALUES (0,'Mortgages',200.0,'2019-07-06','Paid');
+INSERT INTO EXPENSE (expenseID,NAME,AMOUNT,DUEDATE,PAID) VALUES (1,'Lawn Care',40.0,'2019-06-27','Paid');
+INSERT INTO EXPENSE (expenseID,NAME,AMOUNT,DUEDATE,PAID) VALUES (2,'Insurance',200.0,'2019-07-06','Unpaid');
 
 commit work;
