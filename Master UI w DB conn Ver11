@@ -2339,28 +2339,6 @@ ResultSet dbResults;
     });
     
     // new
-    btnMnthlyExpReports.setOnAction(m -> {
-        mnthlyExpReportsPane = new GridPane();
-        mnthlyExpReportsPane.setAlignment(Pos.CENTER);
-        mnthlyExpReportsPane.setHgap(5);
-        mnthlyExpReportsPane.setVgap(10);
-        
-        mnthlyExpReportsPane.add(lblMonth, 0, 0);
-        mnthlyExpReportsPane.add(cmboMonthList, 1, 0);
-        mnthlyExpReportsPane.add(btnViewExpenses, 2, 0);
-        mnthlyExpReportsPane.add(taExpenses, 0, 2, 10, 5);
-        mnthlyExpReportsPane.add(lblTotalExp, 0, 12);
-        mnthlyExpReportsPane.add(txtTotExp, 1, 12);
-        txtTotExp.setEditable(false);
-
-        
-        Scene mnthlyExpReportsScene = new Scene(mnthlyExpReportsPane, 750, 500);
-        Stage mnthlyExpReportsStage = new Stage();
-        mnthlyExpReportsStage.setScene(mnthlyExpReportsScene);
-        mnthlyExpReportsStage.setTitle("Thrifty Store Sales Report");
-        mnthlyExpReportsStage.show();
-    });
-    
        btnMnthlyExpReports.setOnAction(m -> {
         mnthlyExpReportsPane = new GridPane();
         mnthlyExpReportsPane.setAlignment(Pos.CENTER);
@@ -2375,7 +2353,7 @@ ResultSet dbResults;
         mnthlyExpReportsPane.add(txtTotExp, 1, 12);
         txtTotExp.setEditable(false);
         taExpenses.setEditable(false);
-     
+        
         Scene mnthlyExpReportsScene = new Scene(mnthlyExpReportsPane, 750, 500);
         Stage mnthlyExpReportsStage = new Stage();
         mnthlyExpReportsStage.setScene(mnthlyExpReportsScene);
@@ -2518,7 +2496,6 @@ ResultSet dbResults;
                 txtTotExp.setText("$" + expTot); 
         }
     }
-
     public static void main(String[] args) 
     {
         launch(args);
@@ -2565,8 +2542,7 @@ ResultSet dbResults;
             sendDBCommand(sqlQuery);
         }
 
-    }
-        
+    }      
     public void loadCustomerDB() {
         String sqlQuery = "SELECT * FROM CUSTOMER";
         //sendDBCommand(sqlQuery);
@@ -2617,7 +2593,6 @@ ResultSet dbResults;
         }
 
     }
-
     public void loadEmployeeDB() {
 
         String sqlQuery = "SELECT * FROM EMPLOYEE";
@@ -2682,7 +2657,6 @@ ResultSet dbResults;
             
         }
     }
-
     public void loadSupplierDB() {
 
         String sqlQuery = "SELECT * FROM SUPPLIER";
@@ -2730,7 +2704,6 @@ ResultSet dbResults;
 
         }
     }
-   
     public void loadExpenseDB() {
 
         String sqlQuery = "SELECT * FROM EXPENSE";
@@ -2791,13 +2764,6 @@ ResultSet dbResults;
         }
 
     }
-
-    public void DeleteEmployeeDB(Employee selectedEmp){
-
-        String sqlQuery = "DELETE FROM EMPLOYEE WHERE employeeID = "+selectedEmp.getEmployeeID()+"";
-        sendDBCommand(sqlQuery);
-    }
-    
    public void loadProductDB() {
 
         String sqlQuery = "SELECT * FROM PRODUCT";
@@ -2872,9 +2838,12 @@ ResultSet dbResults;
 
         }
     }
-    
-    public void sendDBCommand(String sqlQuery)
+    public void DeleteEmployeeDB(Employee selectedEmp){
 
+        String sqlQuery = "DELETE FROM EMPLOYEE WHERE employeeID = "+selectedEmp.getEmployeeID()+"";
+        sendDBCommand(sqlQuery);
+    }  
+    public void sendDBCommand(String sqlQuery)
     {
         String URL = "jdbc:oracle:thin:@localhost:1521:XE";
         String userID = "javauser"; 
@@ -2899,7 +2868,6 @@ ResultSet dbResults;
         }
 
     }
-
     public static Connection getDBConnection(String url, 
 
             String user, 
@@ -2910,7 +2878,5 @@ ResultSet dbResults;
         ds.setURL(url);
         return ds.getConnection(user, pass);
     }
-
-
 
 }
