@@ -1,0 +1,107 @@
+btnEmployeeReports.setOnAction(e -> {
+
+        empReportsPane = new GridPane();
+        empReportsPane.setAlignment(Pos.CENTER);
+        empReportsPane.setHgap(15);
+        empReportsPane.setVgap(10);
+        empReportsPane.setPadding(new Insets(15, 10, 10, 15));
+        
+        
+
+        empReportsPane.add(lblEmp, 0, 0);
+        empReportsPane.add(cmboEmp, 1, 0);
+        empReportsPane.add(lblEmpStartWeek, 0, 1);
+        empReportsPane.add(lblEmpEndWeek, 1, 1);
+        empReportsPane.add(dpEmpShiftStart, 0, 2);
+        empReportsPane.add(dpEmpShiftEnd, 1, 2);
+        empReportsPane.add(btnGenEmpReports, 2, 2);
+        empReportsPane.add(taEmpReport, 0, 3, 5, 5);
+        taEmpReport.setMinWidth(600);
+
+        Scene empReportsScene = new Scene(empReportsPane, 700, 350);
+        Stage empReportsStage = new Stage();
+        empReportsStage.setScene(empReportsScene);
+        empReportsStage.setTitle("Thrifty Store Employee Report");
+        empReportsStage.show();
+    });
+
+    // new
+
+    btnGenEmpReports.setOnAction(g -> {
+                             
+        int empIndex = cmboEmp.getSelectionModel().getSelectedIndex();
+        Employee emp = Employee.get(empIndex);
+        String empData = "";
+        int weeklyHours = 0;
+        
+        for (int i = 0; i < Shifts.size(); i++) {
+            Schedule shift = Shifts.get(i);
+        
+            if(shift.getShiftEmp().equals(emp)) {
+
+                
+                // Split strings by blankspace
+                String start = shift.getShiftBegTime();
+                int s = start.indexOf(' ');
+                String startTime = start.substring(0, s);
+                
+                String end = shift.getShiftEndTime();
+                int e = end.indexOf(' ');
+                String endTime = end.substring(0, e);
+                
+                // Split string by colon
+                int s1 = startTime.indexOf(':');
+                String sTime = startTime.substring(0, s1);
+                
+                int e1 = endTime.indexOf(':');
+                String eTime = endTime.substring(0, e1);
+                
+                // Convert to integers
+                int sNum = Integer.parseInt(sTime);
+                int eNum = Integer.parseInt(eTime);
+                
+                // Create temp numbers
+                int tempNum = 0;
+                int tempNum1 = 0;
+                int hours = 0;
+                
+                if(sNum < 12) {
+                    tempNum = (12 - sNum);
+                }
+                else {
+                    
+                }
+                    
+                if(eNum < 12) {
+                    tempNum1 = eNum;
+                }
+                
+                hours = (tempNum + tempNum1);
+                
+                
+                //Convert to local dates
+                LocalDate sT = dpEmpShiftStart.getValue();
+                LocalDate eT = dpEmpShiftEnd.getValue();
+                LocalDate shiftDay = LocalDate.parse(shift.getDate());
+                
+                
+                
+                    if((shiftDay.isEqual(sT) || shiftDay.isAfter(sT)) && shiftDay.isBefore(eT)) {
+                    
+                        
+                        empData += "Name: "+ shift.getShiftEmp().getEmployeeName() 
+                            + "  Date:  " + shift.getDate() + "  Begin Time: " + 
+                            shift.getShiftBegTime() +  "  End Time: " + 
+                            shift.getShiftEndTime() + "  Hours Worked: " + hours + "\n";
+                        
+                        weeklyHours += hours;
+                    }
+                
+                
+            }
+            
+        }
+        empData += "\nwvrdWeekly Hours: " + weeklyHours;
+        taEmpReport.setText(empData);
+        
+    });
