@@ -48,8 +48,8 @@ Name VarChar(30));
 Create table TimeShift
 (shiftNumID Integer Primary Key,
 employeeID Integer,
-begTime Integer,
-endTime Integer,
+begTime VarChar(10),
+endTime VarChar(10),
 TSDate VarChar(11),
 Foreign Key(employeeID) REFERENCES Employee);
 
@@ -123,5 +123,8 @@ INSERT INTO SUPPLYORDER (productID,supplierID,QUANTITY,PRICE) VALUES (1,2,10,3.0
 INSERT INTO EXPENSE (expenseID,NAME,AMOUNT,DUEDATE,PAID) VALUES (0,'Mortgages',200.0,'2019-07-06','Paid');
 INSERT INTO EXPENSE (expenseID,NAME,AMOUNT,DUEDATE,PAID) VALUES (1,'Lawn Care',40.0,'2019-06-27','Paid');
 INSERT INTO EXPENSE (expenseID,NAME,AMOUNT,DUEDATE,PAID) VALUES (2,'Insurance',200.0,'2019-07-06','Unpaid');
+
+INSERT INTO TIMESHIFT (shiftNumID,employeeID,begTime,endTime,TSDate) VALUES (0,0,'8:00 AM','4:00 PM','2019-06-26');
+INSERT INTO TIMESHIFT (shiftNumID,employeeID,begTime,endTime,TSDate) VALUES (1,1,'9:00 AM','5:00 PM','2019-06-27');
 
 commit work;
