@@ -1,0 +1,233 @@
+import java.time.LocalDateTime;
+import javafx.application.Application;
+
+import javafx.event.*;
+
+import javafx.scene.Scene;
+
+import javafx.scene.control.*;
+
+import javafx.scene.layout.*;
+
+import javafx.stage.Stage;
+
+
+
+//added
+
+import java.util.*;
+
+import javafx.collections.*;
+
+import javafx.geometry.Pos;
+
+
+
+public class CustomerOrder {
+
+    
+
+    public int customerOrderQuantity;
+
+    public LocalDateTime orderDate;
+
+    private Customer customerInfo;
+
+    public ArrayList<Product> ShoppingCart = new ArrayList<Product>();
+    
+    public ArrayList<Integer> ItemQuantities = new ArrayList<Integer>();
+
+ 
+
+    private int customerOrderID;
+    private static int nextID = 0;
+
+
+
+    public CustomerOrder(Customer customerOrder)
+
+        {
+
+            this.orderDate = LocalDateTime.now();
+
+            this.customerInfo = customerOrder; 
+
+            this.customerOrderID = nextID++;
+
+
+
+            //productInfo.setCount(productInfo.getCount() -quantity);
+
+
+
+        }
+
+    
+
+    public String describeSale()
+
+        {
+
+            String describeSale = " ";
+
+            String custName;
+
+            custName = customerInfo.getCustomerName();
+
+
+            describeSale    += "Customer Name:\t" + custName + ",\t"
+
+                            + "Quantity: " + this.customerOrderQuantity + ",\t"
+
+                            + "Date: " + this.orderDate;
+
+
+
+            return describeSale;
+
+        }
+    
+    public void calculateOrderQuantity()
+    {
+        for(int i = 0; i < ItemQuantities.size(); i++)
+            {
+                this.customerOrderQuantity += ItemQuantities.get(i);
+            }
+    }
+    
+    public void addToCart(Product p)
+    {
+        this.ShoppingCart.add(p);
+    }
+    
+    public void addQuantities(int amount)
+    {
+        this.ItemQuantities.add(amount);
+    }
+    
+    public String discountApplied(boolean status)
+    {
+        String applied = "";
+        
+        if(status == true)
+        {
+            applied = "Yes";
+        }
+        else
+        {
+            applied = "No";
+        }
+        
+        return applied;
+    }
+    
+    public double applyDiscount(boolean status, double price, double discount, int quantity)
+    {
+        double total = 0;
+        
+        if(status == true)
+        {
+            total = discount * quantity;
+        }
+        else
+        {
+            total = price * quantity;
+        }
+        
+        return total;
+        
+    }
+
+  
+
+    public int getCustomerOrderID() {
+
+        return this.customerOrderID;
+
+    }
+
+
+
+    public int getQuantity() {
+
+        return customerOrderQuantity;
+
+    }
+
+
+
+    public String getOrderDate() {
+
+        return String.valueOf(orderDate);
+
+    }
+
+
+
+    public Customer getCustomerInfo() {
+
+        return customerInfo;
+
+    }
+
+
+
+    public String getProductInfo() {
+
+        String info = "Item Quantity\tProduct\tProduct Total\n\n";
+        
+        for(Product p: ShoppingCart)
+        {
+            info += this.ItemQuantities.get(this.ShoppingCart.indexOf(p)) + 
+                    "\t" + p.getProductName() + "\t$" + applyDiscount(this.customerInfo.getClubMember(), 
+                            p.getSalePrice(), p.getDiscountSalePrice(), 
+                            this.ItemQuantities.get(this.ShoppingCart.indexOf(p))) 
+                    + "\n";
+        }
+        
+        return info;
+
+    }
+    
+    public double getGrandTotal()
+    {
+        double grandTotal = 0;
+        
+        for(Product p: ShoppingCart)
+        {
+            grandTotal += applyDiscount(this.customerInfo.getClubMember(), 
+                            p.getSalePrice(), p.getDiscountSalePrice(), 
+                            this.ItemQuantities.get(this.ShoppingCart.indexOf(p)));
+        }
+        
+        return grandTotal;
+    }
+
+    public String displayOrder()
+    {
+        return "Sale ID: " + this.getCustomerOrderID() + ", Date: " + 
+                
+                this.orderDate + ", Customer Name: " + this.customerInfo.getCustomerName() +
+                
+                "\n------------------------------------\n, Product Sold: " + this.getProductInfo();
+    }
+   
+
+    @Override
+
+    public String toString() {
+        
+        return "Sale ID: " + this.getCustomerOrderID() + ", Date: " + 
+                
+                this.orderDate + ", Customer Name: " + this.customerInfo.getCustomerName() +
+                
+                "\n------------------------------------\n, Product Sold: " + this.getProductInfo() +
+                
+                "--------------------------------------\nTotal: $" + this.getGrandTotal();
+                
+
+    }
+
+       
+
+}
