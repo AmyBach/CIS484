@@ -1,0 +1,187 @@
+
+public class Customer {
+
+
+    private String CustomerName;
+    private String CustomerAddress;
+    private String CustomerPhone;
+    private String CustomerEmail;
+    private boolean ClubMember;
+    private int custID;
+    private static int nextID = 0;
+    
+    public Customer(String name, String phone, String address, String email, boolean status )
+
+    {
+
+        this.CustomerName = name;
+
+        this.CustomerAddress = address;
+
+        this.CustomerPhone = phone;
+        
+        this.CustomerEmail = email;
+        
+        this.ClubMember = status;
+
+        this.custID = nextID++;
+
+    }
+    
+    public Customer(String name, String phone, boolean status )
+
+    {
+
+        this.CustomerName = name;
+
+        this.CustomerPhone = phone;
+        
+         this.ClubMember = status;
+
+        this.custID = nextID++;
+
+    }
+    
+    
+    //getter setter for First Name
+
+     public void setCustomerName(String name)
+
+    {
+
+        //if customer enter nothing
+
+       if(name.length() == 0)
+
+        System.out.println("Invalid Input Entered!");
+
+       else
+
+        this.CustomerName = name;
+
+    }
+
+    
+    public String getCustomerName()
+
+    {
+
+        return CustomerName;
+
+    }
+
+    
+     //getter setter for customer Address
+
+     public void setCustomerAddress(String custAddress)
+
+    {
+
+        //if customer enter nothing
+
+       if(custAddress == "")
+
+        System.out.println("Invalid Input Entered!");
+
+       else
+
+        this.CustomerAddress = custAddress;
+
+    }
+
+    
+    
+     public String getCustomerAddress()
+
+    {
+
+        return CustomerAddress;
+
+    }
+
+    
+
+    //getter setter for customer Phone
+
+    public void setCustomerPhone(String custPhone)
+
+    {
+
+        //if customer enter nothing
+
+       if(custPhone == "")
+
+        System.out.println("Invalid Input Entered!");
+
+       else
+
+        this.CustomerPhone = custPhone;
+
+    }
+
+    
+
+    public String getCustomerPhone()
+
+    {
+
+        return this.CustomerPhone;
+
+    }
+
+    
+    //getID 
+
+    public int getCustID() {
+
+        return this.custID;
+
+    }
+    
+    // get email
+    public String getCustomerEmail()
+    {
+        return this.CustomerEmail;
+    }
+
+    // set email
+    public void setCustomerEmail(String email)
+    {
+        this.CustomerEmail = email;
+    }
+    
+    public boolean getClubMember()
+    {
+        return this.ClubMember;
+    }
+    
+    public void setClubMember(boolean status)
+    {
+        this.ClubMember = status;
+    }
+    
+    public void getDiscount(Product prod)
+    {
+        double discountPrice;
+        if(this.ClubMember == true)
+        {
+           discountPrice = prod.getSalePrice() - (prod.getSalePrice() * .15);
+        }
+    }
+    
+
+    @Override 
+
+    public String toString() {
+
+        return "Customer ID: " + this.getCustID() +", Customer Name: " +
+
+                this.CustomerName + ", Member: " + this.getClubMember();
+
+    }
+
+    
+
+    
+
+}
