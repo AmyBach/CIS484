@@ -330,7 +330,7 @@ ResultSet dbResults;
     ObservableList editExpenseList = FXCollections.observableArrayList(); 
     ObservableList obsFilters = FXCollections.observableArrayList("Category", "Amount", "Due Date", "Paid");
     ObservableList obsProdCate = FXCollections.observableArrayList("Meat/Dairy", "Canned", "Dry", "Sweet", 
-            "Snacks", "Fruit/Veeggie", "Beverage", "Pharmacy");
+            "Snacks", "Fruit/Veggie", "Beverage", "Pharmacy");
     ObservableList<Schedule> schTableData = FXCollections.observableArrayList(Shifts);
     ObservableList obsMonth = FXCollections.observableArrayList("January", "February", "March", "April", "May", "June", "July", "August",
             "September", "October", "November", "December");
@@ -2773,7 +2773,7 @@ Stage shopCartStage = new Stage();
         Statement cmmtStmt;
         ResultSet dbResults = null;
 
-        System.out.println(sqlQuery);
+        //System.out.println(sqlQuery);
 
         
         try
@@ -2827,7 +2827,7 @@ Stage shopCartStage = new Stage();
         Statement cmmtStmt;
         ResultSet dbResults = null;
        
-        System.out.println(sqlQuery);
+        //System.out.println(sqlQuery);
 
         
         try
@@ -2891,7 +2891,7 @@ Stage shopCartStage = new Stage();
         Statement cmmtStmt;
         ResultSet dbResults = null;
        
-        System.out.println(sqlQuery);
+        //System.out.println(sqlQuery);
  
         try
         {
@@ -2939,7 +2939,7 @@ Stage shopCartStage = new Stage();
         ResultSet dbResults = null;
 
 
-        System.out.println(sqlQuery);
+        //System.out.println(sqlQuery);
 
         
         try
@@ -2999,7 +2999,7 @@ Stage shopCartStage = new Stage();
         Statement cmmtStmt;
         ResultSet dbResults = null;
 
-        System.out.println(sqlQuery);        
+        //System.out.println(sqlQuery);        
 
         try
         {
@@ -3059,7 +3059,7 @@ Stage shopCartStage = new Stage();
         ResultSet dbResults = null;
 
 
-        System.out.println(sqlQuery);
+        //System.out.println(sqlQuery);
 
         
         try
@@ -3136,7 +3136,7 @@ Stage shopCartStage = new Stage();
         Statement cmmtStmt;
         ResultSet dbResults;
        
-        System.out.println(sqlQuery);
+        //System.out.println(sqlQuery);
 
         try
         {
