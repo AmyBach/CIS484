@@ -2565,7 +2565,7 @@ Stage shopCartStage = new Stage();
         
         taPOS.setText(CustomerOrder.get(cmboSelectCust.getSelectionModel().getSelectedIndex()).displayOrder());
         
-        txtTotal.setText(String.valueOf(CustomerOrder.get(cmboSelectCust.getSelectionModel().getSelectedIndex()).getGrandTotal()));
+        txtTotal.setText(String.format("$%.2f" ,CustomerOrder.get(cmboSelectCust.getSelectionModel().getSelectedIndex()).getGrandTotal()));
         
         taReceipt.setText(CustomerOrder.get(cmboSelectCust.getSelectionModel().getSelectedIndex()).toString());
         
