@@ -161,11 +161,13 @@ public class CustomerOrder {
         
         for(Product p: ShoppingCart)
         {
-            info += this.ItemQuantities.get(this.ShoppingCart.indexOf(p)) + 
-                    "\t" + p.getProductName() + "\t$" + applyDiscount(this.customerInfo.getClubMember(), 
+            info += String.format(this.ItemQuantities.get(this.ShoppingCart.indexOf(p)) + 
+
+                    "\t" + p.getProductName() + "\t$%.2f\n", applyDiscount(this.customerInfo.getClubMember(), 
+
                             p.getSalePrice(), p.getDiscountSalePrice(), 
-                            this.ItemQuantities.get(this.ShoppingCart.indexOf(p))) 
-                    + "\n";
+
+                            this.ItemQuantities.get(this.ShoppingCart.indexOf(p))));
         }
         
         return info;
@@ -200,13 +202,13 @@ public class CustomerOrder {
 
     public String toString() {
         
-        return "Sale ID: " + this.getCustomerOrderID() + ", Date: " + 
+        return String.format("Sale ID: " + this.getCustomerOrderID() + ", Date: " + 
                 
                 this.orderDate + ", Customer Name: " + this.customerInfo.getCustomerName() +
                 
                 "\n------------------------------------\n Product Sold: " + this.getProductInfo() +
                 
-                "--------------------------------------\nTotal: $" + this.getGrandTotal();
+                "--------------------------------------\nTotal: $%.2f", this.getGrandTotal());
                 
 
     }
