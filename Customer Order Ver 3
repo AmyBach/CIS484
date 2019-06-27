@@ -157,7 +157,7 @@ public class CustomerOrder {
 
     public String getProductInfo() {
 
-        String info = "Item Quantity,\tProduct,\tProduct Total\n\n";
+        String info = "\nItem Quantity,\tProduct,\tDiscount Applied,\tProduct Total\n\n";
         
         for(Product p: ShoppingCart)
         {
@@ -193,6 +193,8 @@ public class CustomerOrder {
         return "Sale ID: " + this.getCustomerOrderID() + ", Date: " + 
                 
                 this.orderDate + ", Customer Name: " + this.customerInfo.getCustomerName() +
+
+                "\nDiscount Applied: " + this.discountApplied(this.getCustomerInfo().getClubMember()) + 
                 
                 "\n------------------------------------\n Product Sold: " + this.getProductInfo();
     }
@@ -206,8 +208,10 @@ public class CustomerOrder {
                 
                 this.orderDate + ", Customer Name: " + this.customerInfo.getCustomerName() +
                 
+                "\nDiscount Applied: " + this.discountApplied(this.getCustomerInfo().getClubMember()) +
+
                 "\n------------------------------------\n Product Sold: " + this.getProductInfo() +
-                
+
                 "--------------------------------------\nTotal: $%.2f", this.getGrandTotal());
                 
 
