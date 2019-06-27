@@ -106,7 +106,7 @@ public class CustomerOrder {
     
     public double applyDiscount(boolean status, double price, double discount, int quantity)
     {
-        double total = 0;
+        double total = 0.0;
         
         if(status == true)
         {
@@ -174,7 +174,7 @@ public class CustomerOrder {
     
     public double getGrandTotal()
     {
-        double grandTotal = 0;
+        double grandTotal = 0.0;
         
         for(Product p: ShoppingCart)
         {
